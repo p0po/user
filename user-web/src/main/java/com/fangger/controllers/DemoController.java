@@ -1,9 +1,13 @@
-package cn.ioozo.controllers;
+package com.fangger.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import com.fangger.dao.mysql.model.User;
+import com.fangger.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.MatrixVariable;
@@ -16,7 +20,10 @@ import org.springframework.web.context.request.async.DeferredResult;
 @Controller
 @RequestMapping("/demo")
 public class DemoController {
-	@RequestMapping(value="/",method = RequestMethod.GET)
+	@Autowired
+    UserService userService;
+
+    @RequestMapping(value="",method = RequestMethod.GET)
 	@ResponseBody
     public String helloWorld() {
         return "helloWorld";
@@ -27,7 +34,19 @@ public class DemoController {
 		model.addAttribute("message", "Hello World!");
 		return "helloWorld";
     }
-	
+
+    @RequestMapping(value="/mysql",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getMysqlData(Model model) {
+        List<User> userList = userService.getAllUser();
+        StringBuilder sb = new StringBuilder();
+        for(User user:userList){
+            sb.append(user.toString());
+        }
+        return userList;
+    }
+
+
 	@RequestMapping(value="/map",method = RequestMethod.GET,produces="application/json")
 	@ResponseBody
 	public Map<String,Object> map(){
