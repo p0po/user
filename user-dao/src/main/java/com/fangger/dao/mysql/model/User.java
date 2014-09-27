@@ -160,4 +160,15 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }
