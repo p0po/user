@@ -12,7 +12,7 @@
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ucenter?useUnicode=true&amp;characterEncoding=utf8" />
 		<property name="user" value="root" />
-		<property name="password" value="root" />
+		<property name="password" value="b@nkond" />
 		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
 		<property name="acquireIncrement" value="3" />
 		<!--初始化时获取连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
@@ -42,7 +42,7 @@
 
 	<!-- mybatis Scanner自动注入 http://mybatis.github.io/spring/zh/mappers.html#MapperScannerConfigurer-->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="cn.ioozo.dao.mysql.mapper" />
+		<property name="basePackage" value="com.fangger.dao.mysql.mapper" />
 	</bean>
 
 	<!--transaction事物 http://mybatis.github.io/spring/zh/transactions.html -->
