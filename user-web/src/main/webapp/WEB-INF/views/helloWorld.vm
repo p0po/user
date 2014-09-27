@@ -1,0 +1,1 @@
+i am views,and the controller message is :<br> ${message}
