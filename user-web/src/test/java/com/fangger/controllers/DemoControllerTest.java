@@ -1,5 +1,6 @@
-package cn.ioozo.controllers;
+package com.fangger.controllers;
 
+import com.fangger.controllers.DemoController;
 import junit.framework.TestCase;
 
 import org.junit.Test;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAda
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class DemoControllerTest extends TestCase {
 	@Autowired  
-    private DemoController controller;  
+    private DemoController controller;
   
     //这种方法适用于Springframework3.0，3.1换了handler的处理类。  
     @Autowired  

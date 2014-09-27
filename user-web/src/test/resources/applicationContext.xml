@@ -18,7 +18,7 @@
     <mvc:annotation-driven enable-matrix-variables="true"/>   
     <tx:annotation-driven />
     
-    <context:component-scan base-package="cn.ioozo.controllers"/>
+    <context:component-scan base-package="com.fangger.controllers"/>
  
     <import resource="classpath:applicationContext-dataSource.xml"/> 
 </beans>
