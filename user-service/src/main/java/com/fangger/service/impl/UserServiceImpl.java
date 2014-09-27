@@ -9,7 +9,9 @@ import com.fangger.dao.mysql.mapper.UserMapper;
 import com.fangger.dao.mysql.model.User;
 import com.fangger.dao.mysql.model.UserExample;
 import com.fangger.service.UserService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService{
 	@Autowired
 	UserMapper userMapper;
