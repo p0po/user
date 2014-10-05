@@ -9,6 +9,21 @@
         <param-value>/WEB-INF/classes/applicationContext*.xml</param-value>
 	</context-param>
 
+    <filter>
+        <filter-name>Character Encoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Character Encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener
 		</listener-class>
@@ -39,5 +54,8 @@
 	<welcome-file-list>
 		<welcome-file>index.vm</welcome-file>
 	</welcome-file-list>
+
+
+
 
 </web-app>
