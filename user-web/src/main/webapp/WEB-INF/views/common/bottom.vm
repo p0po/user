@@ -1,0 +1,4 @@
+</div>##中间部分结束
+#if($tips)<script type="text/javascript">alertTips("$tips",2000);</script>#end
+</body>
+</html>

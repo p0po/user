@@ -1,10 +1,13 @@
 package com.fangger.controllers;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import com.fangger.annotation.Reg;
+import com.fangger.apk.ApkUtils;
 import com.fangger.dao.mysql.model.User;
 import com.fangger.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +31,7 @@ public class DemoController {
     public String helloWorld() {
         return "helloWorld";
     }
-	
+
 	@RequestMapping(value="/view",method = RequestMethod.GET)
 	public String helloView(Model model) {
 		model.addAttribute("message", "Hello World!");
@@ -46,6 +49,26 @@ public class DemoController {
         return userList;
     }
 
+    @RequestMapping(value="/apktest",method = RequestMethod.GET)
+    @ResponseBody
+    public Callable<Object> testApk(Model model) {
+        return new Callable<Object>() {
+            public Object call() throws Exception {
+                Map<String,String> permission = new HashMap<String,String>();
+                try {
+                    permission = ApkUtils.getAndroidManifestUsePermission("d:/apk/weixin540android480.apk");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return permission;
+            }
+        };
+
+
+
+
+    }
+
 
 	@RequestMapping(value="/map",method = RequestMethod.GET,produces="application/json")
 	@ResponseBody
@@ -59,13 +82,13 @@ public class DemoController {
 		map.put("key3", "value3");
 		return map;
 	}
-	
+
 	@RequestMapping(value="/owners/{ownerId}", method=RequestMethod.GET)
 	@ResponseBody
-	public String findOwner(@PathVariable("ownerId") String theOwner, Model model) {
+	public String findOwner(@Reg("\\d+")@PathVariable("ownerId") String theOwner,Model model) {
 		return theOwner;
 	}
-	
+
 	/*
 	@RequestMapping(value="/owners/{ownerId}", method=RequestMethod.GET)
 	@ResponseBody
@@ -73,7 +96,7 @@ public class DemoController {
 		return ownerId;
 	}
 	*/
-	
+
 	@RequestMapping(value = "/owners/{ownerId}/pets/{petId}", method = RequestMethod.GET)
 	@ResponseBody
 	public void findPet(
@@ -86,8 +109,8 @@ public class DemoController {
 		for(String key:matrixVars.keySet()){
 			System.out.println("key:"+key+"  value:"+matrixVars.get(key).toString());
 		}
-		
-		
+
+
 		for(String key:petMatrixVars.keySet()){
 			System.out.println("key:"+key+"  value:"+petMatrixVars.get(key).toString());
 		}
@@ -96,7 +119,7 @@ public class DemoController {
 	    // petMatrixVars: ["q" : 11, "s" : 23]
 		//return "dd";
 	}
-	
+
 	@RequestMapping(value = "/callable", method = RequestMethod.GET)
 	public Callable<String> callabel(){
 		return new Callable<String>() {
@@ -106,8 +129,8 @@ public class DemoController {
 	        }
 	    };
 	}
-	
-	
+
+
 	DeferredResult<String> deferredResult = null;
 	@RequestMapping("/defe")
 	@ResponseBody

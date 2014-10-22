@@ -1,0 +1,38 @@
+body {
+    clear: both;
+    margin: 0;
+    padding: 0;
+    height:100%;
+}
+
+#tips{
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:100;
+    width:100%;
+}
+#content{
+    position: relative;
+    margin-top: 60px;
+}
+#toolbar{
+    height:30px;
+    margin-top:20px;
+}
+.breadcrumb li.btna{float:right;margin-top:-5px;margin-left:20px;}
+#toolbar-left{float:left;line-height:30px;font-size:20px;}
+#toolbar-right{float:right;height:32px;}
+.bottom{
+    background-color: #f5f5f5;
+    clear: both;
+    height: 30px;
+    margin-top: -30px;
+    position: relative;
+}
+.bottom a, .bottom a:hover, .bottom a:visited, .bottom a:active{
+    font-size:12px;
+    line-height: 30px;
+    padding-left: 20px;
+    color: #666;
+}

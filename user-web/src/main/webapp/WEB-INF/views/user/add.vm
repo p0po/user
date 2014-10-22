@@ -1,0 +1,49 @@
+#parse("common/head.vm")
+<div class="container">
+
+    <div id="toolbar">
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/?sid=$!{sid}">系统管理</a> <span class="divider">/</span></li>
+            <li class="active">用户管理(共${num}用户)</li>
+
+            <li class="btna">
+                <div class="btn-group dropdown">
+                    <a type="button" class="btn btn-default" href="/admin/user/list/$prepage?sid=$!{sid}">上一页</a>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        第 $page 页，共 $maxpage 页<span class="caret"></span>
+                    </button>
+                    <a type="button" class="btn btn-default"  href="/admin/user/list/$nextpage?sid=$!{sid}">下一页</a>
+                    <ul class="dropdown-menu">
+                        #foreach($showpage in [1..$maxpage])
+                            #if(${showpage} == $page)
+                                <li class="active"><a href="javascript:void(0);">第$showpage页</a></li>
+                            #else
+                                <li><a href="/admin/user/list/${showpage}?sid=$!{sid}">第$showpage页</a></li>
+                            #end
+                        #end
+                    </ul>
+                </div>
+            </li>
+            <li class="btna"><a class="btn btn-primary" type="button" href="/admin/user/add?sid=$!{sid}"><i class="icon-user icon-white"></i>&nbsp;新增用户</a><li>
+            <li class="btna"><a class="btn btn-danger confirm-del confirm-all-del" type="button" href="/admin/user/delete/"><i class="icon-user icon-white"></i>&nbsp;删除用户</a></li>
+
+        </ul>
+
+    </div>
+
+    <div ><hr></div>
+
+
+    <div id="userlist">
+        <form action="add" method="post">
+            <input name="account" type="text" >
+            <input name="password" type="password">
+            <input type="submit" value="提交">
+        </form>
+    </div>
+
+
+
+
+#parse("common/bottom.vm")

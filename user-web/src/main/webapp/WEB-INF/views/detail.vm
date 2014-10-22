@@ -1,0 +1,145 @@
+#parse("common/head3.vm")
+<div class="container-fluid" style="background-color:#e8e8e8">
+    <div class="container container-pad" id="property-listings">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>方格儿网</h1>
+                <p>我们建议大家做有良心的APP</p>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h4 class="text-center">微信</h4>
+                </div>
+                <div class="panel-body text-center">
+                    <p class="lead">
+                        <strong>此应用会泄露您的通讯录、短消息</strong>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush text-center">
+                    <li class="list-group-item"><i class="icon-ok text-danger"></i>Personal use</li>
+                    <li class="list-group-item"><i class="icon-ok text-danger"></i>Unlimited projects</li>
+                    <li class="list-group-item"><i class="icon-ok text-danger"></i>27/7 support</li>
+                </ul>
+                <div class="panel-footer">
+                    <a class="btn btn-lg btn-block btn-danger" href="http://www.jquery2dotnet.com">马上下载</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="text-center">
+                            PRO PLAN</h4>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p class="lead">
+                            <strong>$10 / month</strong></p>
+                    </div>
+                    <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Personal use</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Unlimited projects</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>27/7 support</li>
+                    </ul>
+                    <div class="panel-footer">
+                        <a class="btn btn-lg btn-block btn-info" href="http://www.jquery2dotnet.com">BUY NOW!</a>
+                    </div>
+                </div>
+        </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h4 class="text-center">
+                            FREE PLAN</h4>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p class="lead">
+                            <strong>$10 / month</strong></p>
+                    </div>
+                    <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Personal use</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Unlimited projects</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>27/7 support</li>
+                    </ul>
+                    <div class="panel-footer">
+                        <a class="btn btn-lg btn-block btn-success" href="http://www.jquery2dotnet.com">BUY
+                            NOW!</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="text-center">
+                            SILVER PLAN</h4>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p class="lead">
+                            <strong>$10 / month</strong></p>
+                    </div>
+                    <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Personal use</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Unlimited projects</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>27/7 support</li>
+                    </ul>
+                    <div class="panel-footer">
+                        <a class="btn btn-lg btn-block btn-primary" href="http://www.jquery2dotnet.com">BUY
+                            NOW!</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h4 class="text-center">
+                            GOLD PLAN</h4>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p class="lead">
+                            <strong>$10 / month</strong></p>
+                    </div>
+                    <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Personal use</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Unlimited projects</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>27/7 support</li>
+                    </ul>
+                    <div class="panel-footer">
+                        <a class="btn btn-lg btn-block btn-warning" href="http://www.jquery2dotnet.com">BUY
+                            NOW!</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="text-center">
+                            PLATINUM PLAN</h4>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p class="lead">
+                            <strong>$10 / month</strong></p>
+                    </div>
+                    <ul class="list-group list-group-flush text-center">
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Personal use</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>Unlimited projects</li>
+                        <li class="list-group-item"><i class="icon-ok text-danger"></i>27/7 support</li>
+                    </ul>
+                    <div class="panel-footer">
+                        <a class="btn btn-lg btn-block btn-default" href="http://www.jquery2dotnet.com">BUY
+                            NOW!</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+</div>
+#parse("common/bottom3.vm")
