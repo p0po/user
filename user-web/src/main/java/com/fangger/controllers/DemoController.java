@@ -51,9 +51,9 @@ public class DemoController {
 
     @RequestMapping(value="/apktest",method = RequestMethod.GET)
     @ResponseBody
-    public Callable<Object> testApk(Model model) {
-        return new Callable<Object>() {
-            public Object call() throws Exception {
+    public Callable<Map<String,String>> testApk(Model model) {
+        return new Callable<Map<String,String>>() {
+            public Map<String,String> call() throws Exception {
                 Map<String,String> permission = new HashMap<String,String>();
                 try {
                     permission = ApkUtils.getAndroidManifestUsePermission("d:/apk/weixin540android480.apk");
@@ -63,25 +63,35 @@ public class DemoController {
                 return permission;
             }
         };
-
-
-
-
     }
 
 
-	@RequestMapping(value="/map",method = RequestMethod.GET,produces="application/json")
+	@RequestMapping(value="/map",method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String,Object> map(){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("key1", 1);
 		Map<String,Object> key2 = new HashMap<String,Object>();
 		key2.put("k21", 21);
-		key2.put("k22", "22");
+		key2.put("k22", "你好");
 		map.put("key2", key2);
 		map.put("key3", "value3");
 		return map;
 	}
+
+    @RequestMapping(value="/jsonString1",method = RequestMethod.GET,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String map1(){
+        String result = "hello：王永珀";
+        return result;
+    }
+
+    @RequestMapping(value="/jsonString2",method = RequestMethod.GET)
+    @ResponseBody
+    public String map2(){
+        String result = "hello：王永珀";
+        return result;
+    }
 
 	@RequestMapping(value="/owners/{ownerId}", method=RequestMethod.GET)
 	@ResponseBody
