@@ -1,0 +1,99 @@
+#parse("common/head.vm")
+<div class="container">
+
+    <div id="toolbar">
+
+        <ul class="breadcrumb">
+            <li><a href="/admin/?sid=$!{sid}">系统管理</a> <span class="divider">/</span></li>
+            <li class="active">app管理(共${num}App)</li>
+
+            <li class="btna">
+                <div class="btn-group dropdown">
+                    <a type="button" class="btn btn-default" href="/admin/user/list/$prepage?sid=$!{sid}">上一页</a>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        第 $page 页，共 $maxpage 页<span class="caret"></span>
+                    </button>
+                    <a type="button" class="btn btn-default"  href="/admin/user/list/$nextpage?sid=$!{sid}">下一页</a>
+                    <ul class="dropdown-menu">
+                        #foreach($showpage in [1..$maxpage])
+                            #if(${showpage} == $page)
+                                <li class="active"><a href="javascript:void(0);">第$showpage页</a></li>
+                            #else
+                                <li><a href="/admin/user/list/${showpage}?sid=$!{sid}">第$showpage页</a></li>
+                            #end
+                        #end
+                    </ul>
+                </div>
+            </li>
+            <li class="btna"><a class="btn btn-primary" type="button" href="/admin/user/add?sid=$!{sid}"><i class="icon-user icon-white"></i>&nbsp;App列表</a><li>
+            <li class="btna"><a class="btn btn-danger confirm-del confirm-all-del" type="button" href="/admin/user/delete/"><i class="icon-user icon-white"></i>&nbsp;删除App</a></li>
+
+        </ul>
+
+    </div>
+
+    <div ><hr></div>
+
+
+    <div id="appAdd">
+        <form action="add" method="post">
+            <div class="control-group">
+                <label class="control-label">名称：</label>
+                <div class="controls">
+                    <input class="span4" type="text" name="name" placeholder="45个字符以内，不能包含特殊字符、标点符号">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">版本号：</label>
+                <div class="controls">
+                    <input class="span4" type="text" name="version" placeholder="版本号码">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">apk链接：</label>
+                <div class="controls">
+                    <input class="span4" type="text" name="url" placeholder="下载地址">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">应用描述：</label>
+                <div class="controls">
+                    <input class="span4" type="text" name="describes" placeholder="应用描述">
+                </div>
+            </div>
+            <input onclick="return check(this)" class="btn btn-large span4  btn-primary" data-loading-text="正在提交..." type="submit" value="提交数据" />
+        </form>
+    </div>
+
+    <script>
+        function check(obj){
+            var stop = false;
+            jQuery(":text,:password", document.forms[0]).each(function(){
+                if(jQuery(this).attr("type") == "hidden"||jQuery(this).attr("type") == "submit"){
+                    return ture;
+                }
+
+                if(this.value.replace(/[ ]/g,"") == ""){
+                    jQuery(this).parent().parent().removeClass("error");
+                    var obj = jQuery(this).parent();
+                    obj.find("span:last").remove();
+
+                    jQuery(this).parent().parent().addClass("error");
+                    //lablename = jQuery(this).parent().parent().children()[0].innerHTML;
+                    jQuery(this).parent().append('<span class="help-block">该字段不能为空</span>');
+                    stop = true;
+                    return false;
+                }
+            });
+
+            if(stop){
+                stop = false;
+                return false;
+            }
+
+            jQuery(obj).button('loading');
+
+        }
+    </script>
+
+#parse("common/bottom.vm")
