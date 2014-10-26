@@ -1,19 +1,30 @@
 package com.fangger.dao.mysql.mapper;
 
-import static org.junit.Assert.fail;
-
+import com.fangger.dao.mysql.model.User;
+import com.fangger.dao.mysql.model.UserExample;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/applicationContext-dataSource.xml")
 public class UserMapperTest {
+    @Autowired
+    UserMapper userMapper;
 
-	@Test
+    @Test
 	public void testCountByExample() {
-		fail("Not yet implemented");
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountIsNotNull();
+        int size = userMapper.countByExample(userExample);
+		assertTrue(size>0);
+		//fail("Not yet implemented");
 	}
 
 	@Test
@@ -38,12 +49,19 @@ public class UserMapperTest {
 
 	@Test
 	public void testSelectByExample() {
-		fail("Not yet implemented");
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountIsNotNull();
+        List<User> userList =userMapper.selectByExample(userExample);
+        assertTrue(userList.size() > 0);
+        //fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSelectByPrimaryKey() {
-		fail("Not yet implemented");
+        UserExample userExample = new UserExample();
+        //userExample.createCriteria().andAccountIsNotNull();
+        User user =userMapper.selectByPrimaryKey(1);
+        assertNotNull(user);
 	}
 
 	@Test
