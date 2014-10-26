@@ -21,6 +21,7 @@
                         </list>
                     </property>
                 </bean>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
             </list>
         </property>
         <!--异步请求的超时时间控制-->
@@ -37,7 +38,7 @@
 <!--
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>
 -->
-	<mvc:annotation-driven enable-matrix-variables="true" ></mvc:annotation-driven>
+    <mvc:annotation-driven enable-matrix-variables="true" ></mvc:annotation-driven>
 
 	<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
 		<property name="resourceLoaderPath">
