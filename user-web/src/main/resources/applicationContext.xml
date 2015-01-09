@@ -21,7 +21,7 @@
                         </list>
                     </property>
                 </bean>
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
             </list>
         </property>
         <!--异步请求的超时时间控制-->
