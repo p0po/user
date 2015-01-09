@@ -1,28 +1,33 @@
 package com.fangger.controllers;
 
+import com.fangger.annotation.Reg;
+import com.fangger.dao.mysql.model.User;
+import com.fangger.model.JsonResponse;
+import com.fangger.service.UserService;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import com.fangger.annotation.Reg;
-import com.fangger.apk.ApkUtils;
-import com.fangger.dao.mysql.model.User;
-import com.fangger.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.async.DeferredResult;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 @RequestMapping("/demo")
 public class DemoController {
+	Logger logger = LoggerFactory.getLogger(DemoController.class);
 	@Autowired
     UserService userService;
 
@@ -34,6 +39,7 @@ public class DemoController {
 
 	@RequestMapping(value="/view",method = RequestMethod.GET)
 	public String helloView(Model model) {
+		logger.debug("Thread ID:{}",Thread.currentThread().getId());
 		model.addAttribute("message", "Hello World!");
 		return "helloWorld";
     }
@@ -48,7 +54,7 @@ public class DemoController {
         }
         return userList;
     }
-
+/*
     @RequestMapping(value="/apktest",method = RequestMethod.GET)
     @ResponseBody
     public Callable<Map<String,String>> testApk(Model model) {
@@ -65,7 +71,7 @@ public class DemoController {
         };
     }
 
-
+*/
 	@RequestMapping(value="/map",method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String,Object> map(){
@@ -93,11 +99,37 @@ public class DemoController {
         return result;
     }
 
+	@RequestMapping(value="/jsonString3",method = RequestMethod.GET)
+	@ResponseBody
+	public Object map3(){
+		String result = "hello：王永珀";
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("1","english");
+		map.put("2","中文");
+		map.put("3",null);
+		return JsonResponse.ok(map);
+	}
+
 	@RequestMapping(value="/owners/{ownerId}", method=RequestMethod.GET)
 	@ResponseBody
-	public String findOwner(@Reg("\\d+")@PathVariable("ownerId") String theOwner,Model model) {
-		return theOwner;
+	public String findOwner(@PathVariable("ownerId") String theOwner,Model model) {
+		return "string: "+theOwner;
 	}
+
+	/*
+	@RequestMapping(value="/owners/{ownerId}", method=RequestMethod.GET)
+	@ResponseBody
+	public String findOwner2(@PathVariable("ownerId") int theOwner,Model model) {
+		return "int: "+theOwner;
+	}
+*/
+
+	@RequestMapping(value="/owners/me", method=RequestMethod.GET)
+	@ResponseBody
+	public String findOwner1(Model model) {
+		return "me";
+	}
+
 
 	/*
 	@RequestMapping(value="/owners/{ownerId}", method=RequestMethod.GET)
@@ -166,4 +198,68 @@ public class DemoController {
 	    if(this.deferredResult != null)
 		this.deferredResult.setResult("11111111");
 	}
+
+	@RequestMapping("/meinv.jpg")
+	public void meinv(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) {
+
+		String contextPath = httpServletRequest.getContextPath();
+
+		logger.debug("contextPath:{}",contextPath);
+
+		String userMsg = httpServletRequest.getHeader("Authorization");
+
+		if(StringUtils.isEmpty(userMsg)){
+			httpServletResponse.setStatus(401);
+			httpServletResponse.setHeader("WWW-Authenticate","Basic realm=\" \"");
+		}else{
+			String userIp = getIpAddrByRequest(httpServletRequest);
+			logger.debug("ip:{}  msg:{}",userIp,userMsg);
+		}
+
+		try {
+			FileInputStream fileInputStream = new FileInputStream("/Users/p0po/Downloads/zzy.jpg");
+			byte[] cache = new byte[fileInputStream.available()];
+			int end = fileInputStream.read(cache);
+			if(end != -1){
+				httpServletResponse.getOutputStream().write(cache);
+
+				end = fileInputStream.read(cache);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private static String getIpAddrByRequest(HttpServletRequest request) {
+
+		String ip = request.getHeader("x-forwarded-for");
+
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+
+			ip = request.getHeader("Proxy-Client-IP");
+
+		}
+
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+
+			ip = request.getHeader("WL-Proxy-Client-IP");
+
+		}
+
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+
+			ip = request.getRemoteAddr();
+
+		}
+
+		return ip;
+
+	}
+
+
+
+
 }
