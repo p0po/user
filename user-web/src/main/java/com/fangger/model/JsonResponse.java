@@ -20,6 +20,9 @@ public class JsonResponse {
     public static JsonResponse bad(Object content){
         return new JsonResponse(1,content);
     }
+    public static JsonResponse other(int code,Object content){
+        return new JsonResponse(code,content);
+    }
 
     @Override
     public String toString() {
