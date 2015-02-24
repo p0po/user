@@ -1,8 +1,7 @@
-package com.fangger.property;
+package com.fangger.utils.property;
 
 import java.io.*;
 import java.util.*;
-import java.util.zip.InflaterInputStream;
 
 /**
  * Created by popo on 2014/10/2.

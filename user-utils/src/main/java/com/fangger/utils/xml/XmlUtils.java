@@ -1,4 +1,4 @@
-package com.fangger.xml;
+package com.fangger.utils.xml;
 
 import org.dom4j.*;
 import org.dom4j.io.OutputFormat;

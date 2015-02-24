@@ -1,4 +1,4 @@
-package com.fangger.cookie;
+package com.fangger.utils.cookie;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;

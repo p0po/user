@@ -1,6 +1,6 @@
 package com.fangger.controllers;
 
-import com.fangger.cookie.CookieUtil;
+import com.fangger.utils.cookie.CookieUtil;
 import com.fangger.dao.mysql.model.User;
 import com.fangger.model.JsonResponse;
 import com.fangger.service.UserService;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

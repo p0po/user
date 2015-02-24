@@ -1,30 +1,13 @@
-package com.fangger.apk;
-
-import brut.androlib.AndrolibException;
-import brut.androlib.ApkDecoder;
-import brut.androlib.err.CantFindFrameworkResException;
-import brut.androlib.err.InFileNotFoundException;
-import brut.androlib.err.OutDirExistsException;
-import com.fangger.exception.ParamException;
-import com.fangger.property.PptUtils;
-import com.fangger.xml.XmlUtils;
-import org.dom4j.Document;
-import org.dom4j.Element;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
+package com.fangger.utils.apk;
 
 /**
  * Created by popo on 2014/10/13.
  */
 public class ApkUtils {
-    private static String cmdDecode(String apkFile) throws AndrolibException, ParamException {
+    /*
+    private static String cmdDecode(String apkFile) throws AndrolibException {
         if(!apkFile.endsWith(".apk")){
-            throw new ParamException("不是apk类型文件");
+            throw new IllegalArgumentException("不是apk类型文件");
         }
 
         String outName = apkFile.substring(0,apkFile.lastIndexOf(".apk"));
@@ -61,7 +44,7 @@ public class ApkUtils {
          return outName;
 
 
-/*
+*//*
 
         for (int i = 0; i < args.length; i++) {
             String opt = args[i];
@@ -129,7 +112,7 @@ public class ApkUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        }*/
+        }*//*
     }
 
     public static Map<String,String> getAndroidManifestUsePermission(String apkPath) throws IOException {
@@ -138,7 +121,7 @@ public class ApkUtils {
             outName = ApkUtils.cmdDecode(apkPath);
         } catch (AndrolibException e) {
             e.printStackTrace();
-        } catch (ParamException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
 
@@ -153,10 +136,10 @@ public class ApkUtils {
         Properties properties = PptUtils.load(workPath+File.separator+"android.properties", true);
         for(Iterator<Element> iterator = elements.elementIterator("uses-permission");iterator.hasNext();){
             Element element = iterator.next();
-            /*
+            *//*
             Attribute androidAameAttr = element.attribute("android:name");// 获取<line>元素的属性
             String permission = androidAameAttr.getValue();
-            */
+            *//*
             String value = element.attributeValue("name");
             //System.out.println("============"+value+"==============");
             if(value.startsWith("android.permission")){
@@ -170,7 +153,7 @@ public class ApkUtils {
         return usePermissionMap;
     }
 
-    public static void main(String[] args) throws AndrolibException, ParamException, IOException {
+    public static void main(String[] args) throws AndrolibException, IllegalArgumentException, IOException {
         //String outName = ApkUtils.cmdDecode("d:/apk/weixin540android480.apk");
         //System.out.println(outName);
         Map<String,String> permission = getAndroidManifestUsePermission("d:/apk/weixin540android480.apk");
@@ -179,5 +162,5 @@ public class ApkUtils {
         }
     }
 
-
+*/
 }

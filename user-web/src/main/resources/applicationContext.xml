@@ -21,7 +21,16 @@
                         </list>
                     </property>
                 </bean>
-                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <value>application/json</value>
+                    </property>
+                    <property name="features">
+                        <list>
+                            <value>DisableCircularReferenceDetect</value>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
         <!--异步请求的超时时间控制-->
