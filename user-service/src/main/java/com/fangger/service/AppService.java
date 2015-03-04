@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by popo on 2014/10/25.
+ * 测试一下，删除
  */
 public interface AppService {
     public Permission getPermissionById(int id);
