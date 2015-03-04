@@ -1,7 +1,7 @@
 package com.fangger.model;
 
 import com.alibaba.fastjson.JSON;
-import com.fangger.utils.bean.BeanToMapUtil;
+import com.fangger.utils.bean.BeanUtil;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
@@ -36,7 +36,7 @@ public class JsonResponse {
 
         if(toAddMore){
             try {
-                return new JsonResponse(0,SUCCESS, BeanToMapUtil.objectGetToMap(content));
+                return new JsonResponse(0,SUCCESS, BeanUtil.objectGetToMap(content));
             } catch (IntrospectionException e) {
                 e.printStackTrace();
                 throw new IllegalArgumentException("转化失败");
@@ -69,7 +69,7 @@ public class JsonResponse {
 
         if(toAddMore){
             try {
-                return new JsonResponse(0,SUCCESS,BeanToMapUtil.objectGetToMap(content));
+                return new JsonResponse(0,SUCCESS, BeanUtil.objectGetToMap(content));
             } catch (IntrospectionException e) {
                 e.printStackTrace();
                 throw new IllegalArgumentException("转化失败");
