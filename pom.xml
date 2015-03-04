@@ -194,6 +194,8 @@
   	<module>user-web</module>
     <module>user-utils</module>
     <module>user-exception</module>
+	  <module>../crawer</module>
+	  <module>crawer</module>
   </modules>
 	
 </project>
