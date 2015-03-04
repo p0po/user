@@ -5,6 +5,9 @@ import java.util.List;
 import com.fangger.dao.mysql.model.User;
 import com.fangger.exception.UserException;
 
+/**
+ * 测试
+ */
 public interface UserService {
 	public List<User> getAllUser();
     public int addUser(User user) throws UserException;
