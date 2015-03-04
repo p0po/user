@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by p0po on 15/2/27.
  */
-public class BeanToMapUtil {
+public class BeanUtil {
 
     public static Map<String, Object> objectFildToMap(Object o) throws IllegalAccessException {
         Map<String, Object> result = new HashMap<String, Object>();
