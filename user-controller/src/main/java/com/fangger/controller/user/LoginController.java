@@ -1,9 +1,9 @@
 package com.fangger.controller.user;
 
-import com.fangger.utils.cookie.CookieUtil;
 import com.fangger.dao.mysql.model.User;
-import com.fangger.utils.json.JsonResponse;
 import com.fangger.service.UserService;
+import com.fangger.utils.cookie.CookieUtil;
+import com.fangger.utils.json.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -26,36 +26,36 @@ public class LoginController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value="login",method = RequestMethod.GET)
-    public String loginGet(){
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String loginGet() {
         return "user/login";
     }
 
-    @RequestMapping(value="ajaxlogin",method = RequestMethod.POST)
+    @RequestMapping(value = "ajaxlogin", method = RequestMethod.POST)
     @ResponseBody
-    public Object ajaxLoginPost(@RequestParam("account")String account,@RequestParam("password")String password){
-        if(StringUtils.isEmpty(account)){
+    public Object ajaxLoginPost(@RequestParam("account") String account, @RequestParam("password") String password) {
+        if (StringUtils.isEmpty(account)) {
             return JsonResponse.bad("用户名不能为空");
         }
-        if(StringUtils.isEmpty(password)){
+        if (StringUtils.isEmpty(password)) {
             return JsonResponse.bad("密码不能为空");
         }
-        User user = userService.login(account,password);
-        if(user != null){
+        User user = userService.login(account, password);
+        if (user != null) {
             return JsonResponse.ok();
         }
         return JsonResponse.bad("用户名或者密码错误");
     }
 
-    @RequestMapping(value="login",method = RequestMethod.POST)
-    public ModelAndView loginPost(@RequestParam("account")String account
-            ,@RequestParam("password")String password
-            ,HttpServletRequest request
-            ,HttpServletResponse response){
-        User user = userService.login(account,password);
-        if(user != null){
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public ModelAndView loginPost(@RequestParam("account") String account
+            , @RequestParam("password") String password
+            , HttpServletRequest request
+            , HttpServletResponse response) {
+        User user = userService.login(account, password);
+        if (user != null) {
             CookieUtil.getIntence(response)
-                    .add("uid",String.valueOf(user.getId()));
+                    .add("uid", String.valueOf(user.getId()));
             return new ModelAndView(new RedirectView("/success"));
         }
         return new ModelAndView(new RedirectView("/failure"));

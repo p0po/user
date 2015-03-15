@@ -18,25 +18,25 @@ import java.util.List;
 @Controller
 @RequestMapping("")
 public class IndexController {
-    @RequestMapping(value="",method = RequestMethod.GET)
-    public String home(){
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String home() {
         return "home";
     }
 
-    @RequestMapping(value="weixin",method = RequestMethod.GET)
-    public String app(){
+    @RequestMapping(value = "weixin", method = RequestMethod.GET)
+    public String app() {
 
         return "detail";
     }
 
 
-    @RequestMapping(value="apk",method = RequestMethod.GET)
+    @RequestMapping(value = "apk", method = RequestMethod.GET)
     @ResponseBody
-    public Object doShell(@RequestParam("url")String apkurl){
-        return shell("sh ./bin/app/do.sh "+apkurl);
+    public Object doShell(@RequestParam("url") String apkurl) {
+        return shell("sh ./bin/app/do.sh " + apkurl);
     }
 
-    private List<String> shell(String cmd){
+    private List<String> shell(String cmd) {
         Process process = null;
         List<String> processList = new ArrayList<String>();
         try {

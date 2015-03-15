@@ -1,17 +1,15 @@
 package com.fangger.service.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import com.fangger.exception.UserException;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fangger.dao.mysql.mapper.UserMapper;
 import com.fangger.dao.mysql.model.User;
 import com.fangger.dao.mysql.model.UserExample;
 import com.fangger.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -28,21 +26,21 @@ public class UserServiceImpl implements UserService{
 	}
 
     @Override
-    public int addUser(User user) throws UserException {
+    public int addUser(User user) {
         if(user == null){
-            throw  new UserException("无用户");
+            throw  new IllegalArgumentException("无用户");
         }
 
         if (StringUtils.isEmpty(user.getAccount())){
-            throw  new UserException("用户名不能为空");
+            throw  new IllegalArgumentException("用户名不能为空");
         }
 
         if (StringUtils.isEmpty(user.getPassword())){
-            throw  new UserException("密码不能为空");
+            throw  new IllegalArgumentException("密码不能为空");
         }
 
         if(checkAccount(user.getAccount())){
-            throw new UserException("用户："+user.getAccount()+" 已经存在。");
+            throw new IllegalArgumentException("用户："+user.getAccount()+" 已经存在。");
         }
 
         user.setPassword(generatePassword(user.getPassword()));
@@ -56,13 +54,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void editUser(User user) throws UserException {
+    public void editUser(User user){
         if(user == null){
-            throw  new UserException("无用户");
+            throw  new IllegalArgumentException("无用户");
         }
 
         if(checkAccount(user.getAccount())){
-            throw new UserException("用户："+user.getAccount()+" 已经存在。");
+            throw new IllegalArgumentException("用户："+user.getAccount()+" 已经存在。");
         }
 
         user.setPassword(null);
@@ -104,9 +102,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void resetPassword(User user) throws UserException {
+    public void resetPassword(User user) {
         if(user == null){
-            throw  new UserException("无用户");
+            throw  new IllegalArgumentException("无用户");
         }
         user.setAccount(null);
         user.setPassword(generatePassword(user.getPassword()));

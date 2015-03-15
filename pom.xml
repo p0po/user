@@ -189,13 +189,13 @@
   </build>
   
   <modules>
-  	<module>user-dao</module>
-  	<module>user-service</module>
-  	<module>user-web</module>
-    <module>user-utils</module>
-    <module>user-exception</module>
-	  <module>../crawer</module>
+	  <module>user-common</module>
+	  <module>user-dao</module>
+	  <module>user-service</module>
+	  <module>user-controller</module>
+	  <module>user-web</module>
 	  <module>crawer</module>
+	  <module>test-guava</module>
   </modules>
 	
 </project>

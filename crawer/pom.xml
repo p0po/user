@@ -14,13 +14,8 @@
     <dependencies>
         <dependency>
             <groupId>com.fangger</groupId>
-            <artifactId>user-utils</artifactId>
+            <artifactId>user-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.paoding</groupId>
-            <artifactId>jade</artifactId>
-            <version>1.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

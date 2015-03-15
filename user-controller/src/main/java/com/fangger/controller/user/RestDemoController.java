@@ -15,14 +15,14 @@ import java.util.Map;
 @RestController
 @RequestMapping("/demo1")
 public class RestDemoController {
-    @RequestMapping(value="/jsonString3",method = RequestMethod.GET)
+    @RequestMapping(value = "/jsonString3", method = RequestMethod.GET)
     @ResponseBody
-    public Object map3(){
+    public Object map3() {
         String result = "hello：王永珀";
-        Map<String,String> map = new HashMap<String,String>();
-        map.put("1","english");
-        map.put("2","中文");
-        map.put("3",null);
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("1", "english");
+        map.put("2", "中文");
+        map.put("3", null);
         return JsonResponse.ok(map);
     }
 

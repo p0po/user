@@ -8,20 +8,10 @@
   <artifactId>user-web</artifactId>
   <packaging>war</packaging>
   <dependencies>
-  	<dependency>
-  		<groupId>com.fangger</groupId>
-  		<artifactId>user-dao</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>com.fangger</groupId>
-  		<artifactId>user-service</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
-  	</dependency>
     <dependency>
-          <groupId>com.fangger</groupId>
-          <artifactId>user-utils</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
+      <groupId>com.fangger</groupId>
+      <artifactId>user-controller</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

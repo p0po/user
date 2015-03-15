@@ -17,14 +17,14 @@ public class AppController {
     @Autowired
     AppService appService;
 
-    @RequestMapping(value="add",method = RequestMethod.GET)
-    public String addGet(){
+    @RequestMapping(value = "add", method = RequestMethod.GET)
+    public String addGet() {
         return "apk/add";
     }
 
-    @RequestMapping(value="add",method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public String addPost(App app){
+    public String addPost(App app) {
         System.out.println(app);
         appService.saveApk(app);
         return "apk/add";

@@ -1,6 +1,6 @@
 package com.fangger.controllers;
 
-import com.fangger.controllers.DemoController;
+import com.fangger.controller.user.DemoController;
 import junit.framework.TestCase;
 
 import org.junit.Test;

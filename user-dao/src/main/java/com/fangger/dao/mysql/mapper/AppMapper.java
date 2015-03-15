@@ -96,5 +96,5 @@ public interface AppMapper {
      */
     int updateByPrimaryKey(App record);
 
-    int batchUpdateStatusByPrimaryKey(@Param()App record,List<Integer> ids);
+    int batchUpdateStatusByPrimaryKey(@Param("")App record,List<Integer> ids);
 }
