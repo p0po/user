@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="
-           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-           http://www.springframework.org/schema/tx    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-       "
-	default-lazy-init="true">
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+	   default-lazy-init="true">
 
 	<!-- 使用c3p0连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -34,8 +30,6 @@
 		<property name="numHelperThreads" value="3" />
 	</bean>
 
-	<bean class="net.paoding.rose.jade.context.spring.JadeBeanFactoryPostProcessor" />
-
 	<!-- mybatis datasource http://mybatis.github.io/spring/zh/factorybean.html-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -47,6 +41,8 @@
 		<property name="basePackage" value="com.fangger.dao.mysql.mapper" />
 	</bean>
 
+	<bean class="net.paoding.rose.jade.context.spring.JadeBeanFactoryPostProcessor" />
+
 	<!--transaction事物 http://mybatis.github.io/spring/zh/transactions.html -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
@@ -56,6 +52,5 @@
 	<!--
 	<tx:jta-transaction-manager />
     -->
-
 
 </beans>
