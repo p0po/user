@@ -1,4 +1,4 @@
-package com.fangger.dao.rose.model;
+package rose.model;
 
 /**
  * Created by p0po on 15-3-15.

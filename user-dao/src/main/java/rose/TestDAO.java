@@ -1,6 +1,6 @@
-package com.fangger.dao.rose;
+package rose;
 
-import com.fangger.dao.rose.model.Xiaoqu;
+import rose.model.Xiaoqu;
 import net.paoding.rose.jade.annotation.DAO;
 import net.paoding.rose.jade.annotation.SQL;
 
