@@ -11,7 +11,7 @@
         <param-value>/WEB-INF/classes/log4j.properties</param-value>
 
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/classes/applicationContext*.xml</param-value>
+        <param-value>/WEB-INF/classes/spring-mvc*.xml</param-value>
     </context-param>
 
     <listener>

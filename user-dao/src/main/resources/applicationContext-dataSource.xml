@@ -10,9 +10,9 @@
 	<!-- 使用c3p0连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/popo?useUnicode=true&amp;characterEncoding=utf8" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/fangger?useUnicode=true&amp;characterEncoding=utf8" />
 		<property name="user" value="root" />
-		<property name="password" value="b@nkond" />
+		<property name="password" value="root" />
 		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
 		<property name="acquireIncrement" value="3" />
 		<!--初始化时获取连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
@@ -34,6 +34,8 @@
 		<property name="numHelperThreads" value="3" />
 	</bean>
 
+	<bean class="net.paoding.rose.jade.context.spring.JadeBeanFactoryPostProcessor" />
+
 	<!-- mybatis datasource http://mybatis.github.io/spring/zh/factorybean.html-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -51,5 +53,9 @@
 	</bean>
 
 	<!-- cmt事物代理 http://mybatis.github.io/spring/zh/transactions.html#container-->
+	<!--
 	<tx:jta-transaction-manager />
+    -->
+
+
 </beans>
