@@ -4,7 +4,7 @@
 
 user-common 是web通用组件。包含拦截器，注解，工具类等通用组件。
 
-user-dao MG自动生成的工程，一般不用干预 
+user-dao MG自动生成的工程，一般不用干预
 
 user-service
 
@@ -15,10 +15,10 @@ user-web 通过mvn装配工程需要的controller
 
 
 
-# `jar` user-common
+# `jar` url
 
 
 |字段|类型|是否必须|描述|默认值|
 |---|---|---|---|---|
-|from|String|false|登录成功后回跳地址|
+|from|String|false||
 
