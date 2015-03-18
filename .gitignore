@@ -1,4 +1,4 @@
-.class
+*.class
 # Package Files #
 *.jar
 *.war
@@ -8,6 +8,5 @@ target/
 .idea/
 .git/
 
-.iml
-.bak
-
+*.iml
+*.bak
