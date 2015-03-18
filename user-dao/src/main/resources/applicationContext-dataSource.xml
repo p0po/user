@@ -33,12 +33,12 @@
 	<!-- mybatis datasource http://mybatis.github.io/spring/zh/factorybean.html-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath:sqlMapper/*.xml" />
+		<property name="mapperLocations" value="classpath:com/fangger/mapper/*.xml" />
 	</bean>
 
 	<!-- mybatis Scanner自动注入 http://mybatis.github.io/spring/zh/mappers.html#MapperScannerConfigurer-->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.fangger.dao.mysql.mapper" />
+		<property name="basePackage" value="com.fangger.mapper" />
 	</bean>
 
 	<bean class="net.paoding.rose.jade.context.spring.JadeBeanFactoryPostProcessor" />

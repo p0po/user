@@ -1,12 +1,9 @@
 package com.fangger.controller.user;
 
-import com.fangger.dao.mysql.model.User;
-import com.fangger.service.UserService;
 import com.fangger.utils.json.JsonResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -26,8 +22,6 @@ import java.util.concurrent.Callable;
 @RequestMapping("/demo")
 public class DemoController {
     Logger logger = LoggerFactory.getLogger(DemoController.class);
-    @Autowired
-    UserService userService;
 
 
 
@@ -44,16 +38,6 @@ public class DemoController {
         return "helloWorld";
     }
 
-    @RequestMapping(value = "/mysql", method = RequestMethod.GET)
-    @ResponseBody
-    public Object getMysqlData(Model model) {
-        List<User> userList = userService.getAllUser();
-        StringBuilder sb = new StringBuilder();
-        for (User user : userList) {
-            sb.append(user.toString());
-        }
-        return userList;
-    }
 
     /*
         @RequestMapping(value="/apktest",method = RequestMethod.GET)

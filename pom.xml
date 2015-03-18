@@ -201,6 +201,7 @@
 	  <module>user-web</module>
 	  <module>crawer</module>
 	  <module>test-guava</module>
+	  <module>mybatis-gen</module>
   </modules>
 	
 </project>
