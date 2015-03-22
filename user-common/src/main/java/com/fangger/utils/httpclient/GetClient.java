@@ -18,34 +18,37 @@ import static com.fangger.utils.httpclient.DefaultConst.*;
 public class GetClient {
     /**
      * 发起GET请求，默认header，默认超时
+     *
      * @param url
      * @return
      */
-    public static String get(String url){
-        return get(url,null,DEFAULT_TIME_OUT);
+    public static String get(String url) {
+        return get(url, null, DEFAULT_TIME_OUT);
     }
 
     /**
      * 发起GET请求，默认超时
+     *
      * @param url
      * @param header
      * @return
      */
-    public static String get(String url,Map<String,String> header){
-        return get(url,header,DEFAULT_TIME_OUT);
+    public static String get(String url, Map<String, String> header) {
+        return get(url, header, DEFAULT_TIME_OUT);
     }
 
     /**
      * 发起GET请求
+     *
      * @param url
      * @param header
      * @param connectionTimeOut
      * @return
      */
-    public static String get(String url,Map<String,String> header,int connectionTimeOut){
+    public static String get(String url, Map<String, String> header, int connectionTimeOut) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        connectionTimeOut = connectionTimeOut<0?DEFAULT_TIME_OUT:connectionTimeOut;
+        connectionTimeOut = connectionTimeOut < 0 ? DEFAULT_TIME_OUT : connectionTimeOut;
 
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(connectionTimeOut)
@@ -57,9 +60,9 @@ public class GetClient {
 
         httpget.setConfig(requestConfig);
 
-        if(header != null){
-            for(String key:header.keySet()){
-                httpget.setHeader(key,header.get(key));
+        if (header != null) {
+            for (String key : header.keySet()) {
+                httpget.setHeader(key, header.get(key));
             }
         }
 
@@ -68,14 +71,14 @@ public class GetClient {
         try {
             response = httpClient.execute(httpget);
 
-            if(response != null){
+            if (response != null) {
                 result = EntityUtils.toString(response.getEntity());
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(response != null){
+        } finally {
+            if (response != null) {
                 try {
                     response.close();
                 } catch (IOException e) {
@@ -88,31 +91,33 @@ public class GetClient {
 
     /**
      * 并发发起GET请求 默认header
+     *
      * @param url
      * @return
      */
-    public static String getWithPool(String url){
-        return getWithPool(url,null);
+    public static String getWithPool(String url) {
+        return getWithPool(url, null);
     }
 
     /**
      * 并发发起GET请求
+     *
      * @param url
      * @param header
      * @return
      */
-    public static String getWithPool(String url,Map<String,String> header){
+    public static String getWithPool(String url, Map<String, String> header) {
         HttpGet httpget = new HttpGet(url);
 
-        if(header != null){
-            for(String key:header.keySet()){
-                httpget.setHeader(key,header.get(key));
+        if (header != null) {
+            for (String key : header.keySet()) {
+                httpget.setHeader(key, header.get(key));
             }
         }
 
         String result = "";
         try {
-            result = exec.submit(new GetThread(httpClient,httpget)).get();
+            result = exec.submit(new GetThread(httpClient, httpget)).get();
         } catch (Exception e) {
             e.printStackTrace();
         }

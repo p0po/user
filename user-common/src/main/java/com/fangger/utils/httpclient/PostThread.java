@@ -19,7 +19,7 @@ public class PostThread implements Callable<String> {
     private final HttpContext context;
     private final HttpPost httppost;
 
-    public PostThread(CloseableHttpClient httpClient,HttpPost httpPost){
+    public PostThread(CloseableHttpClient httpClient, HttpPost httpPost) {
         this.httpClient = httpClient;
         this.context = HttpClientContext.create();
         this.httppost = httpPost;
@@ -32,7 +32,7 @@ public class PostThread implements Callable<String> {
             CloseableHttpResponse response = httpClient.execute(
                     httppost, context);
             try {
-                if(response != null){
+                if (response != null) {
                     result = EntityUtils.toString(response.getEntity());
                 }
             } finally {

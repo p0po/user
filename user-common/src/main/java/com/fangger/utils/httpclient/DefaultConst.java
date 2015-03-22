@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  * Created by p0po on 15-2-24.
  */
 public class DefaultConst {
-    protected static final int DEFAULT_TIME_OUT = 5*1000;
+    protected static final int DEFAULT_TIME_OUT = 5 * 1000;
 
     protected static final PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     protected static final CloseableHttpClient httpClient = HttpClients.custom()
@@ -25,7 +25,7 @@ public class DefaultConst {
             .build();
     protected static final ExecutorService exec = Executors.newCachedThreadPool();
 
-    protected static CloseableHttpClient createSSLClientDefault(){
+    protected static CloseableHttpClient createSSLClientDefault() {
         SSLContextBuilder builder = new SSLContextBuilder();
         try {
             builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
@@ -45,7 +45,7 @@ public class DefaultConst {
         }
         CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(
                 sslsf).build();
-        return  httpclient;
+        return httpclient;
     }
 
 }

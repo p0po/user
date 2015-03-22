@@ -22,19 +22,19 @@ import static com.fangger.utils.httpclient.DefaultConst.*;
  * Created by p0po on 15-2-24.
  */
 public class PutClient {
-    public String put(String url,Map<String,String> data){
-        return doPut(url,data,null,DEFAULT_TIME_OUT,false);
+    public String put(String url, Map<String, String> data) {
+        return doPut(url, data, null, DEFAULT_TIME_OUT, false);
     }
 
 
-    private static String doPut(String url,Map<String,String> data,Map<String,String> header,int connectionTimeOut,boolean ssl){
+    private static String doPut(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut, boolean ssl) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        if(ssl){
+        if (ssl) {
             httpClient = createSSLClientDefault();
         }
 
-        connectionTimeOut = connectionTimeOut<0?DEFAULT_TIME_OUT:connectionTimeOut;
+        connectionTimeOut = connectionTimeOut < 0 ? DEFAULT_TIME_OUT : connectionTimeOut;
 
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(connectionTimeOut)
@@ -45,15 +45,15 @@ public class PutClient {
 
         httpPut.setConfig(requestConfig);
 
-        if(header != null){
-            for(String key:header.keySet()){
-                httpPut.setHeader(key,header.get(key));
+        if (header != null) {
+            for (String key : header.keySet()) {
+                httpPut.setHeader(key, header.get(key));
             }
         }
 
-        if(data != null){
+        if (data != null) {
             List<NameValuePair> formParams = new ArrayList<NameValuePair>();
-            for(String key:data.keySet()){
+            for (String key : data.keySet()) {
                 formParams.add(new BasicNameValuePair(key, data.get(key)));
             }
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
@@ -64,13 +64,13 @@ public class PutClient {
         CloseableHttpResponse response = null;
         try {
             response = httpClient.execute(httpPut);
-            if(response != null){
+            if (response != null) {
                 result = EntityUtils.toString(response.getEntity());
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(response != null){
+        } finally {
+            if (response != null) {
                 try {
                     response.close();
                 } catch (IOException e) {

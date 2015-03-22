@@ -81,7 +81,7 @@ public class InstallCert {
         X509TrustManager defaultTrustManager = (X509TrustManager) tmf
                 .getTrustManagers()[0];
         SavingTrustManager tm = new SavingTrustManager(defaultTrustManager);
-        context.init(null, new TrustManager[] { tm }, null);
+        context.init(null, new TrustManager[]{tm}, null);
         SSLSocketFactory factory = context.getSocketFactory();
 
         System.out

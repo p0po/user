@@ -19,7 +19,7 @@ public class GetThread implements Callable<String> {
     private final HttpContext context;
     private final HttpGet httpget;
 
-    public GetThread(CloseableHttpClient httpClient, HttpGet httpget){
+    public GetThread(CloseableHttpClient httpClient, HttpGet httpget) {
         this.httpClient = httpClient;
         this.context = HttpClientContext.create();
         this.httpget = httpget;
@@ -32,7 +32,7 @@ public class GetThread implements Callable<String> {
             CloseableHttpResponse response = httpClient.execute(
                     httpget, context);
             try {
-                if(response != null){
+                if (response != null) {
                     result = EntityUtils.toString(response.getEntity());
                 }
             } finally {

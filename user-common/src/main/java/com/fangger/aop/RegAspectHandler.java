@@ -18,28 +18,29 @@ import java.util.regex.Pattern;
 @Component
 public class RegAspectHandler {
     static final Logger logger = Logger.getLogger(RegAspectHandler.class);
-    public RegAspectHandler(){
-        if(logger.isDebugEnabled()){
+
+    public RegAspectHandler() {
+        if (logger.isDebugEnabled()) {
             logger.debug("init RegAspectHandler");
         }
     }
 
     @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
-    public Object around(ProceedingJoinPoint joinPoint) throws Throwable{
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 
         String methodName = joinPoint.getSignature().getName(); //获取方法名称
 
         Class<? extends Object> controller = joinPoint.getTarget().getClass(); //获取Controller对象
-        String[] regArray= null;
-        for(Method method:controller.getDeclaredMethods()){
-            if(method.getName().equals(methodName)){
+        String[] regArray = null;
+        for (Method method : controller.getDeclaredMethods()) {
+            if (method.getName().equals(methodName)) {
                 Annotation[][] ans = method.getParameterAnnotations();
                 regArray = new String[ans.length];
-                for(int i=0;i<ans.length;i++){
+                for (int i = 0; i < ans.length; i++) {
                     regArray[i] = "";
-                    for(Annotation an:ans[i]){
-                        if("Reg".equals(an.annotationType().getSimpleName())){
-                            Reg reg = (Reg)an;
+                    for (Annotation an : ans[i]) {
+                        if ("Reg".equals(an.annotationType().getSimpleName())) {
+                            Reg reg = (Reg) an;
                             regArray[i] = reg.value();
                         }
                     }
@@ -47,26 +48,28 @@ public class RegAspectHandler {
             }
         }
 
-        for(int i = 0;i<joinPoint.getArgs().length;i++){
-            if(i>=regArray.length){break;}
+        for (int i = 0; i < joinPoint.getArgs().length; i++) {
+            if (i >= regArray.length) {
+                break;
+            }
 
             String regStr = regArray[i];
 
-            Object arg =joinPoint.getArgs()[i];
+            Object arg = joinPoint.getArgs()[i];
 
-            if(!"".equals(regStr)){
-                if(!(arg instanceof String)){
-                    throw new IllegalArgumentException("@Reg can only with String args in method "+controller.getName()+"."+methodName);
+            if (!"".equals(regStr)) {
+                if (!(arg instanceof String)) {
+                    throw new IllegalArgumentException("@Reg can only with String args in method " + controller.getName() + "." + methodName);
                 }
 
                 boolean matched = Pattern.compile(regStr).matcher(joinPoint.getArgs()[i].toString()).matches();
 
-                if(logger.isDebugEnabled()){
-                    logger.debug("result: "+matched+" (detect value :"+joinPoint.getArgs()[i].toString()+" with Reg:"+regStr+")");
+                if (logger.isDebugEnabled()) {
+                    logger.debug("result: " + matched + " (detect value :" + joinPoint.getArgs()[i].toString() + " with Reg:" + regStr + ")");
                 }
 
-                if(!matched){
-                    throw new IllegalArgumentException("args "+joinPoint.getArgs()[i].toString()+" of method "+controller.getName()+"."+methodName+" is not matched with Red "+regStr);
+                if (!matched) {
+                    throw new IllegalArgumentException("args " + joinPoint.getArgs()[i].toString() + " of method " + controller.getName() + "." + methodName + " is not matched with Red " + regStr);
                 }
             }
 

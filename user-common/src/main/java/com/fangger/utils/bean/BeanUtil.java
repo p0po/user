@@ -20,7 +20,7 @@ public class BeanUtil {
         Map<String, Object> result = new HashMap<String, Object>();
         Field[] declaredFields = o.getClass().getDeclaredFields();
         for (Field field : declaredFields) {
-                result.put(field.getName(), field.get(o));
+            result.put(field.getName(), field.get(o));
         }
         return result;
     }
@@ -29,12 +29,12 @@ public class BeanUtil {
         Map<String, Object> result = new HashMap<String, Object>();
 
         if (obj instanceof Collection) {
-            result.put("collection",obj);
+            result.put("collection", obj);
             return result;
         }
 
-        if (obj instanceof Number){
-            result.put("number",obj);
+        if (obj instanceof Number) {
+            result.put("number", obj);
             return result;
         }
 
@@ -42,7 +42,7 @@ public class BeanUtil {
 
         for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
             Method reader = pd.getReadMethod();
-            if (reader != null&&!"class".equals(pd.getName()))
+            if (reader != null && !"class".equals(pd.getName()))
                 result.put(pd.getName(), reader.invoke(obj));
         }
         return result;
