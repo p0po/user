@@ -33,19 +33,19 @@ public class XssFilter implements Filter {
         String from = hsr.getHeader("From");
         String requestUri = hsr.getRequestURI();
         if (!requestUri.startsWith("/img")
-          &&!requestUri.startsWith("/css")
-          &&!requestUri.startsWith("/js")) {
-            logger.debug(ip+" "+ Calendar.getInstance().getTimeInMillis()+" "+hsr.getMethod()+" "+requestUri+" "+from+" "+userAgent);
+                && !requestUri.startsWith("/css")
+                && !requestUri.startsWith("/js")) {
+            logger.debug(ip + " " + Calendar.getInstance().getTimeInMillis() + " " + hsr.getMethod() + " " + requestUri + " " + from + " " + userAgent);
         }
         /**
          * 白名单
          */
         if (requestUri == null
-        || requestUri.endsWith("")
-        ) {
+                || requestUri.endsWith("")
+                ) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            filterChain.doFilter(new XssHttpServletRequestWrapper((HttpServletRequest)servletRequest), servletResponse);
+            filterChain.doFilter(new XssHttpServletRequestWrapper((HttpServletRequest) servletRequest), servletResponse);
         }
     }
 
