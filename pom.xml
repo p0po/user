@@ -202,6 +202,7 @@
 	  <module>crawer</module>
 	  <module>test-guava</module>
 	  <module>mybatis-gen</module>
+	  <module>akka-test</module>
   </modules>
 	
 </project>
