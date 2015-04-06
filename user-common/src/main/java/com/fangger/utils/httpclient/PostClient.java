@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import static com.fangger.utils.httpclient.DefaultConst.*;
 
@@ -29,8 +30,8 @@ public class PostClient {
      * @param data
      * @return
      */
-    public static String postWithPool(String url, Map<String, String> data) {
-        return postWithPool(url, data, null);
+    public static String postWithPool(String url, Map<String, String> data,ExecutorService exec) {
+        return postWithPool(url, data, null,exec);
     }
 
     /**
@@ -41,8 +42,8 @@ public class PostClient {
      * @param header
      * @return
      */
-    public static String postWithPool(String url, Map<String, String> data, Map<String, String> header) {
-        return postWithPoolHttp(url, data, header, false);
+    public static String postWithPool(String url, Map<String, String> data, Map<String, String> header,ExecutorService exec) {
+        return postWithPoolHttp(url, data, header, false,exec);
     }
 
 
@@ -54,16 +55,13 @@ public class PostClient {
      * @param header
      * @return
      */
-    public static String postSSLWithPool(String url, Map<String, String> data, Map<String, String> header) {
-        return postWithPoolHttp(url, data, header, true);
+    public static String postSSLWithPool(String url, Map<String, String> data, Map<String, String> header,ExecutorService exec) {
+        return postWithPoolHttp(url, data, header, true,exec);
     }
 
-    private static String postWithPoolHttp(String url, Map<String, String> data, Map<String, String> header, boolean ssl) {
+    private static String postWithPoolHttp(String url, Map<String, String> data, Map<String, String> header, boolean ssl,ExecutorService exec) {
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        if (ssl) {
-            httpClient = createSSLClientDefault();
-        }
 
 
         HttpPost httpPost = new HttpPost(url);

@@ -5,6 +5,7 @@ package com.fangger.utils.security;
  */
 
 import com.google.common.base.Charsets;
+import org.apache.commons.codec.binary.Base64;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -18,7 +19,7 @@ import java.security.spec.AlgorithmParameterSpec;
 
 public class SecurityUtils {
     public static final String ALGORITHM_DES = "DES/CBC/PKCS5Padding";
-    public static final String PRIVATE_KEY = "87bd9232acabd325314dbaada8a4ebc843a6b5257abc7172dc3515032f7bd44e";
+    public static final String PRIVATE_KEY = "key";
 
     /**
      * DES算法，加密
@@ -53,10 +54,11 @@ public class SecurityUtils {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey,sr);
 */
             byte[] bytes = cipher.doFinal(data.getBytes(Charsets.UTF_8));
-            BASE64Encoder base64Encoder = new BASE64Encoder();
+            //BASE64Encoder base64Encoder = new BASE64Encoder();
 
             //return byte2hex(bytes);
-            return base64Encoder.encode(bytes);
+            //return base64Encoder.encode(bytes);
+            return Base64.encodeBase64String(bytes);
         }catch(Exception e){
             e.printStackTrace();
             return data;
@@ -92,9 +94,10 @@ public class SecurityUtils {
             Cipher cipher = Cipher.getInstance("DES");
             cipher.init(Cipher.DECRYPT_MODE, secretKey, sr);
 */
-            BASE64Decoder base64Decoder = new BASE64Decoder();
+            //BASE64Decoder base64Decoder = new BASE64Decoder();
 
-            return new String(cipher.doFinal(base64Decoder.decodeBuffer(data)));
+            //return new String(cipher.doFinal(base64Decoder.decodeBuffer(data)));
+            return new String(cipher.doFinal(Base64.decodeBase64(data)));
         } catch (Exception e){
             e.printStackTrace();
             return data;
@@ -134,5 +137,7 @@ public class SecurityUtils {
         System.out.println(aaa);
         String bbb = SecurityUtils.decode("87bd9232acabd325314dbaada8a4ebc843a6b5257abc7172dc3515032f7bd44e",aaa);
         System.out.println(bbb);
+
+        
     }
 }

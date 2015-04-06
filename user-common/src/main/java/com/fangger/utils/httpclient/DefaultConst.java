@@ -21,9 +21,11 @@ public class DefaultConst {
 
     protected static final PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     protected static final CloseableHttpClient httpClient = HttpClients.custom()
+            .setMaxConnPerRoute(1024)
+            .setMaxConnPerRoute(DEFAULT_TIME_OUT)
+            .setMaxConnTotal(1024)
             .setConnectionManager(cm)
             .build();
-    protected static final ExecutorService exec = Executors.newCachedThreadPool();
 
     protected static CloseableHttpClient createSSLClientDefault() {
         SSLContextBuilder builder = new SSLContextBuilder();
