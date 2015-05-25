@@ -6,8 +6,6 @@ package com.fangger.utils.security;
 
 import com.google.common.base.Charsets;
 import org.apache.commons.codec.binary.Base64;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
@@ -58,7 +56,10 @@ public class SecurityUtils {
 
             //return byte2hex(bytes);
             //return base64Encoder.encode(bytes);
+
             return Base64.encodeBase64String(bytes);
+
+            //return Base64.encodeBase64String(bytes);
         }catch(Exception e){
             e.printStackTrace();
             return data;
