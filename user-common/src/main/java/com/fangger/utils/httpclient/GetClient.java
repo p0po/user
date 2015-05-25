@@ -70,9 +70,7 @@ public class GetClient {
             }
         }
 
-        String result = "";
         CloseableHttpResponse response = null;
-        Map<String,String> map = null;
         try {
             response = httpClient.execute(httpget, HttpClientContext.create());
 
@@ -83,13 +81,13 @@ public class GetClient {
 
             Header[] headers = response.getAllHeaders();
             int size = headers == null?1:(headers.length+1);
-            map = new HashMap<>(size);
+            Map<String,String> map = new HashMap<>(size);
             for (Header resHeader:headers){
                 map.put(resHeader.getName(),resHeader.getValue());
             }
             httpResult.setHeader(map);
 
-            result = EntityUtils.toString(response.getEntity());
+            String result = EntityUtils.toString(response.getEntity());
             httpResult.setBody(result);
         } finally {
             if (response != null) {

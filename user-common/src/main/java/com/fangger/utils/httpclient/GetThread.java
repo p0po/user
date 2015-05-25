@@ -16,9 +16,9 @@ import java.util.concurrent.Callable;
  * Created by p0po on 15/1/7.
  */
 public class GetThread implements Callable<HttpResult> {
-    String url;
-    Map<String, String> header;
-    int connectionTimeOut;
+    private final String url;
+    private final Map<String, String> header;
+    private final int connectionTimeOut;
 
     public GetThread(String url, Map<String, String> header, int connectionTimeOut) {
         this.url = url;

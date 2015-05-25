@@ -1,6 +1,8 @@
 package com.fangger.utils.httpclient;
 
+import com.google.common.base.Preconditions;
 import org.apache.http.Consts;
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -11,11 +13,15 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import javax.security.auth.callback.Callback;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import static com.fangger.utils.httpclient.DefaultConst.*;
 
@@ -30,7 +36,7 @@ public class PostClient {
      * @param data
      * @return
      */
-    public static String postWithPool(String url, Map<String, String> data,ExecutorService exec) {
+    public static Future<HttpResult> postWithPool(String url, Map<String, String> data,ExecutorService exec) {
         return postWithPool(url, data, null,exec);
     }
 
@@ -42,8 +48,8 @@ public class PostClient {
      * @param header
      * @return
      */
-    public static String postWithPool(String url, Map<String, String> data, Map<String, String> header,ExecutorService exec) {
-        return postWithPoolHttp(url, data, header, false,exec);
+    public static Future<HttpResult> postWithPool(String url, Map<String, String> data, Map<String, String> header, ExecutorService exec) {
+        return postWithPoolHttp(url, data, header,exec);
     }
 
 
@@ -55,40 +61,12 @@ public class PostClient {
      * @param header
      * @return
      */
-    public static String postSSLWithPool(String url, Map<String, String> data, Map<String, String> header,ExecutorService exec) {
-        return postWithPoolHttp(url, data, header, true,exec);
+    public static Future<HttpResult> postSSLWithPool(String url, Map<String, String> data, Map<String, String> header,ExecutorService exec) {
+        return postWithPoolHttp(url, data, header,exec);
     }
 
-    private static String postWithPoolHttp(String url, Map<String, String> data, Map<String, String> header, boolean ssl,ExecutorService exec) {
-
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-
-
-        HttpPost httpPost = new HttpPost(url);
-
-        if (header != null) {
-            for (String key : header.keySet()) {
-                httpPost.setHeader(key, header.get(key));
-            }
-        }
-
-        if (data != null) {
-            List<NameValuePair> formParams = new ArrayList<NameValuePair>();
-            for (String key : data.keySet()) {
-                formParams.add(new BasicNameValuePair(key, data.get(key)));
-            }
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
-            httpPost.setEntity(entity);
-        }
-
-        String result = "";
-        try {
-            result = exec.submit(new PostThread(httpClient, httpPost)).get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
+    private static Future<HttpResult> postWithPoolHttp(String url, Map<String, String> data, Map<String, String> header, ExecutorService exec) {
+        return exec.submit(new PostThread(url,data,header,DEFAULT_TIME_OUT));
     }
 
 
@@ -99,7 +77,7 @@ public class PostClient {
      * @param data
      * @return
      */
-    public static String post(String url, Map<String, String> data) {
+    public static HttpResult post(String url, Map<String, String> data) throws IOException {
         return post(url, data, null);
     }
 
@@ -111,7 +89,7 @@ public class PostClient {
      * @param header
      * @return
      */
-    public static String post(String url, Map<String, String> data, Map<String, String> header) {
+    public static HttpResult post(String url, Map<String, String> data, Map<String, String> header) throws IOException {
         return post(url, data, header, DEFAULT_TIME_OUT);
     }
 
@@ -124,29 +102,28 @@ public class PostClient {
      * @param connectionTimeOut
      * @return
      */
-    public static String post(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut) {
-        return doPost(url, data, header, connectionTimeOut, false);
+    public static HttpResult post(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut) throws IOException {
+            return doPost(url, data, header, connectionTimeOut);
     }
 
-
-    public static String sslPost(String url, Map<String, String> data) {
+    public static HttpResult sslPost(String url, Map<String, String> data) throws IOException {
         return post(url, data, null, DEFAULT_TIME_OUT);
     }
 
-    public static String sslPost(String url, Map<String, String> data, Map<String, String> header) {
+    public static HttpResult sslPost(String url, Map<String, String> data, Map<String, String> header) throws IOException {
         return post(url, data, header, DEFAULT_TIME_OUT);
     }
 
-    public static String sslPost(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut) {
-        return doPost(url, data, header, connectionTimeOut, true);
+    public static HttpResult sslPost(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut) throws IOException {
+        return doPost(url, data, header, connectionTimeOut);
     }
 
-    private static String doPost(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut, boolean ssl) {
+    private static HttpResult doPost(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut) throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        if (ssl) {
+      /*  if (ssl) {
             httpClient = createSSLClientDefault();
-        }
+        }*/
 
         connectionTimeOut = connectionTimeOut < 0 ? DEFAULT_TIME_OUT : connectionTimeOut;
 
@@ -174,24 +151,35 @@ public class PostClient {
             httpPost.setEntity(entity);
         }
 
-        String result = "";
+        HttpResult httpResult = new HttpResult();
         CloseableHttpResponse response = null;
         try {
             response = httpClient.execute(httpPost);
-            if (response != null) {
-                result = EntityUtils.toString(response.getEntity());
+            Preconditions.checkNotNull(response, "Get % result null", httpPost.getURI().toString());
+
+            //Preconditions.checkState(response.getStatusLine().getStatusCode() == 200,response.getStatusLine().getStatusCode());
+            httpResult.setStatusCode(response.getStatusLine().getStatusCode());
+
+            Header[] headers = response.getAllHeaders();
+            int size = headers == null?1:(headers.length+1);
+            Map<String,String> map = new HashMap<>(size);
+            for (Header resHeader:headers){
+                map.put(resHeader.getName(),resHeader.getValue());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            httpResult.setHeader(map);
+
+            String result = EntityUtils.toString(response.getEntity());
+            httpResult.setBody(result);
         } finally {
             if (response != null) {
                 try {
                     response.close();
+                    httpPost.releaseConnection();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return result;
+        return httpResult;
     }
 }
