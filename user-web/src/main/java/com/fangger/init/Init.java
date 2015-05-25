@@ -1,5 +1,6 @@
 package com.fangger.init;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
@@ -22,6 +23,11 @@ import java.util.*;
  */
 public class Init implements ServletContextListener {
 
+    private static final Set<RequestMethod> ALL= new LinkedHashSet<>();
+    static {
+        ALL.add(RequestMethod.GET);
+        ALL.add(RequestMethod.POST);
+    }
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -51,7 +57,8 @@ public class Init implements ServletContextListener {
             Set<String> htttpPatterns = requestMappingInfo.getPatternsCondition().getPatterns();
             Set<RequestMethod> httpMethods = requestMappingInfo.getMethodsCondition().getMethods();
             Map<String,Object> httpMap = new HashMap<>();
-            httpMap.put("method",httpMethods);
+            httpMethods = CollectionUtils.isEmpty(httpMethods)?ALL:httpMethods;
+            httpMap.put("method", httpMethods);
             httpMap.put("url",htttpPatterns);
 
             /*if(httpMethods.size() == 0){
