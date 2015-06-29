@@ -16,22 +16,15 @@ import java.util.concurrent.Callable;
  * Created by p0po on 15/1/7.
  */
 public class PostThread implements Callable<HttpResult> {
-    private final String url;
-    Map<String, String> header;
-    Map<String, String> data;
-    int connectionTimeOut;
+    HttpClientBuilder httpClientBuilder;
 
 
-    public PostThread(String url,Map<String, String> data,Map<String, String> header,int connectionTimeOut) {
-        this.url = url;
-        this.header = header;
-        this.data = data;
-        this.connectionTimeOut = connectionTimeOut;
-
+    public PostThread(HttpClientBuilder httpClientBuilder) {
+        this.httpClientBuilder = httpClientBuilder;
     }
 
     @Override
     public HttpResult call() throws Exception {
-        return PostClient.post(url,data,header,connectionTimeOut);
+        return PostClient.send(httpClientBuilder);
     }
 }

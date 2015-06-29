@@ -1,8 +1,10 @@
 package com.fangger.utils.httpclient;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import org.apache.http.Consts;
 import org.apache.http.Header;
+import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -15,6 +17,7 @@ import org.apache.http.util.EntityUtils;
 
 import javax.security.auth.callback.Callback;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,107 +32,30 @@ import static com.fangger.utils.httpclient.DefaultConst.*;
  * Created by p0po on 15-2-24.
  */
 public class PostClient {
-    /**
-     * 并发发起POST请求 默认header
-     *
-     * @param url
-     * @param data
-     * @return
-     */
-    public static Future<HttpResult> postWithPool(String url, Map<String, String> data,ExecutorService exec) {
-        return postWithPool(url, data, null,exec);
+
+    public static Future<HttpResult> sendWithPool(HttpClientBuilder httpClientBuilder, ExecutorService exec) {
+        return exec.submit(new PostThread(httpClientBuilder));
     }
 
-    /**
-     * 并发发起POST请求
-     *
-     * @param url
-     * @param data
-     * @param header
-     * @return
-     */
-    public static Future<HttpResult> postWithPool(String url, Map<String, String> data, Map<String, String> header, ExecutorService exec) {
-        return postWithPoolHttp(url, data, header,exec);
-    }
+    public static HttpResult send(HttpClientBuilder httpClientBuilder) throws IOException {
+        int connectionTimeOut = httpClientBuilder.getConnectionTimeOut() <= 0?DEFAULT_TIME_OUT:httpClientBuilder.getConnectionTimeOut();
+        HttpHost proxy = httpClientBuilder.getProxy();
+        Map<String,String> header = httpClientBuilder.getHeader();
+        Map<String,String> body = httpClientBuilder.getHeader();
+        String url = httpClientBuilder.getUrl();
+        Charset charset = httpClientBuilder.getCharset()==null? Consts.UTF_8:httpClientBuilder.getCharset();
+        Preconditions.checkNotNull(url, "url can not be null");
 
-
-    /**
-     * 并发发起POST请求 SSL
-     *
-     * @param url
-     * @param data
-     * @param header
-     * @return
-     */
-    public static Future<HttpResult> postSSLWithPool(String url, Map<String, String> data, Map<String, String> header,ExecutorService exec) {
-        return postWithPoolHttp(url, data, header,exec);
-    }
-
-    private static Future<HttpResult> postWithPoolHttp(String url, Map<String, String> data, Map<String, String> header, ExecutorService exec) {
-        return exec.submit(new PostThread(url,data,header,DEFAULT_TIME_OUT));
-    }
-
-
-    /**
-     * 发起POST请求 默认超时 默认header
-     *
-     * @param url
-     * @param data
-     * @return
-     */
-    public static HttpResult post(String url, Map<String, String> data) throws IOException {
-        return post(url, data, null);
-    }
-
-    /**
-     * 发起POST请求 默认超时
-     *
-     * @param url
-     * @param data
-     * @param header
-     * @return
-     */
-    public static HttpResult post(String url, Map<String, String> data, Map<String, String> header) throws IOException {
-        return post(url, data, header, DEFAULT_TIME_OUT);
-    }
-
-    /**
-     * 发起POST请求
-     *
-     * @param url
-     * @param data
-     * @param header
-     * @param connectionTimeOut
-     * @return
-     */
-    public static HttpResult post(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut) throws IOException {
-            return doPost(url, data, header, connectionTimeOut);
-    }
-
-    public static HttpResult sslPost(String url, Map<String, String> data) throws IOException {
-        return post(url, data, null, DEFAULT_TIME_OUT);
-    }
-
-    public static HttpResult sslPost(String url, Map<String, String> data, Map<String, String> header) throws IOException {
-        return post(url, data, header, DEFAULT_TIME_OUT);
-    }
-
-    public static HttpResult sslPost(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut) throws IOException {
-        return doPost(url, data, header, connectionTimeOut);
-    }
-
-    private static HttpResult doPost(String url, Map<String, String> data, Map<String, String> header, int connectionTimeOut) throws IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
       /*  if (ssl) {
             httpClient = createSSLClientDefault();
         }*/
 
-        connectionTimeOut = connectionTimeOut < 0 ? DEFAULT_TIME_OUT : connectionTimeOut;
-
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(connectionTimeOut)
                 .setConnectTimeout(connectionTimeOut)
+                .setProxy(proxy)
                 .build();
 
         HttpPost httpPost = new HttpPost(url);
@@ -142,10 +68,10 @@ public class PostClient {
             }
         }
 
-        if (data != null) {
+        if (body != null) {
             List<NameValuePair> formParams = new ArrayList<NameValuePair>();
-            for (String key : data.keySet()) {
-                formParams.add(new BasicNameValuePair(key, data.get(key)));
+            for (String key : body.keySet()) {
+                formParams.add(new BasicNameValuePair(key, body.get(key)));
             }
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
             httpPost.setEntity(entity);
@@ -168,7 +94,7 @@ public class PostClient {
             }
             httpResult.setHeader(map);
 
-            String result = EntityUtils.toString(response.getEntity());
+            String result = EntityUtils.toString(response.getEntity(),charset);
             httpResult.setBody(result);
         } finally {
             if (response != null) {

@@ -16,18 +16,14 @@ import java.util.concurrent.Callable;
  * Created by p0po on 15/1/7.
  */
 public class GetThread implements Callable<HttpResult> {
-    private final String url;
-    private final Map<String, String> header;
-    private final int connectionTimeOut;
+    private HttpClientBuilder httpClientBuilder;
 
-    public GetThread(String url, Map<String, String> header, int connectionTimeOut) {
-        this.url = url;
-        this.header = header;
-        this.connectionTimeOut = connectionTimeOut;
+    public GetThread(HttpClientBuilder httpClientBuilder) {
+        this.httpClientBuilder = httpClientBuilder;
     }
 
     @Override
     public HttpResult call() throws Exception {
-        return GetClient.get(url,header,connectionTimeOut);
+        return GetClient.send(httpClientBuilder);
     }
 }

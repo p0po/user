@@ -1,7 +1,10 @@
 package com.fangger.utils.httpclient;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
+import org.apache.http.Consts;
 import org.apache.http.Header;
+import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -9,6 +12,7 @@ import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -21,43 +25,23 @@ import static com.fangger.utils.httpclient.DefaultConst.*;
  * Created by p0po on 15-2-24.
  */
 public class GetClient {
-    /**
-     * 发起GET请求，默认header，默认超时
-     *
-     * @param url
-     * @return
-     */
-    public static HttpResult get(String url) throws IOException {
-        return get(url, null, DEFAULT_TIME_OUT);
-    }
 
-    /**
-     * 发起GET请求，默认超时
-     *
-     * @param url
-     * @param header
-     * @return
-     */
-    public static HttpResult get(String url, Map<String, String> header) throws IOException {
-        return get(url, header, DEFAULT_TIME_OUT);
-    }
+    public static HttpResult send(HttpClientBuilder httpClientBuilder) throws IOException {
+        int connectionTimeOut = httpClientBuilder.getConnectionTimeOut() <= 0?DEFAULT_TIME_OUT:httpClientBuilder.getConnectionTimeOut();
+        HttpHost proxy = httpClientBuilder.getProxy();
+        Map<String,String> header = httpClientBuilder.getHeader();
+        Map<String,String> body = httpClientBuilder.getHeader();
+        String url = httpClientBuilder.getUrl();
+        Charset charset = httpClientBuilder.getCharset()==null? Consts.UTF_8 :httpClientBuilder.getCharset();
+        Preconditions.checkNotNull(url, "url can not be null");
 
-    /**
-     * 发起GET请求
-     *
-     * @param url
-     * @param header
-     * @param connectionTimeOut
-     * @return
-     */
-    public static HttpResult get(String url, Map<String, String> header, int connectionTimeOut) throws IOException {
-        //CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpResult httpResult = new HttpResult();
-        connectionTimeOut = connectionTimeOut < 0 ? DEFAULT_TIME_OUT : connectionTimeOut;
+        //connectionTimeOut = connectionTimeOut < 0 ? DEFAULT_TIME_OUT : connectionTimeOut;
 
         RequestConfig requestConfig = RequestConfig.custom()
                 .setSocketTimeout(connectionTimeOut)
                 .setConnectTimeout(connectionTimeOut)
+                .setProxy(proxy)
                 .build();
 
         HttpGet httpget = new HttpGet(url);
@@ -76,7 +60,6 @@ public class GetClient {
 
             Preconditions.checkNotNull(response, "Get % result null", httpget.getURI().toString());
 
-            //Preconditions.checkState(response.getStatusLine().getStatusCode() == 200,response.getStatusLine().getStatusCode());
             httpResult.setStatusCode(response.getStatusLine().getStatusCode());
 
             Header[] headers = response.getAllHeaders();
@@ -87,7 +70,7 @@ public class GetClient {
             }
             httpResult.setHeader(map);
 
-            String result = EntityUtils.toString(response.getEntity());
+            String result = EntityUtils.toString(response.getEntity(), charset);
             httpResult.setBody(result);
         } finally {
             if (response != null) {
@@ -103,27 +86,12 @@ public class GetClient {
     }
 
     /**
-     * 并发发起GET请求 默认header
-     *
-     * @param url
-     * @return
-     */
-    public static Future<HttpResult> getWithPool(String url,ExecutorService exec) {
-        return getWithPool(url, null,DEFAULT_TIME_OUT,exec);
-    }
-
-    /**
      * 并发发起GET请求
-     *
-     * @param url
-     * @param header
+     * @param httpClientBuilder
+     * @param exec
      * @return
      */
-    public static Future<HttpResult> getWithPool(String url, Map<String, String> header,int connectionTimeOut,ExecutorService exec) {
-            return exec.submit(new GetThread(url,header,connectionTimeOut));
-    }
-
-    public static void closeExecuter(){
-
+    public static Future<HttpResult> sendWithPool(HttpClientBuilder httpClientBuilder,ExecutorService exec) {
+        return exec.submit(new GetThread(httpClientBuilder));
     }
 }

@@ -20,7 +20,7 @@
     </listener>
 
     <servlet>
-        <servlet-name>dispatcher</servlet-name>
+<servlet-name><dispatch>1`` </dispatch>er</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet
         </servlet-class>
         <init-param>

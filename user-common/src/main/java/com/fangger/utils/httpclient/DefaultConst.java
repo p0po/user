@@ -1,5 +1,6 @@
 package com.fangger.utils.httpclient;
 
+import org.apache.http.config.ConnectionConfig;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
@@ -20,12 +21,16 @@ public class DefaultConst {
     protected static final int DEFAULT_TIME_OUT = 5 * 1000;
 
     protected static final PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
+
+    static {
+        cm.setMaxTotal(1024);
+        cm.setDefaultMaxPerRoute(1024);
+    }
+
     protected static final CloseableHttpClient httpClient = HttpClients.custom()
-            .setMaxConnPerRoute(1024)
-            .setMaxConnPerRoute(DEFAULT_TIME_OUT)
-            .setMaxConnTotal(1024)
             .setConnectionManager(cm)
             .build();
+
 
     protected static CloseableHttpClient createSSLClientDefault() {
         SSLContextBuilder builder = new SSLContextBuilder();
