@@ -1,14 +1,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.fangger</groupId>
-  <artifactId>user</artifactId>
+  <artifactId>spring-mvc</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <properties>
   	<spring.version>4.0.6.RELEASE</spring.version>
   </properties>
-  
-  <dependencies>
+
+	<modules>
+		<module>common</module>
+		<module>base-dao</module>
+		<module>ext-dao</module>
+		<module>base-model</module>
+		<module>web</module>
+		<module>user-service</module>
+		<module>user-controller</module>
+		<module>crawer</module>
+		<module>test-guava</module>
+		<module>mybatis-gen</module>
+		<module>akka-test</module>
+		<module>smarkClient</module>
+	</modules>
+
+	<dependencies>
   	<!-- servlet -->
       <dependency>
           <groupId>javax.servlet</groupId>
@@ -129,7 +144,28 @@
 		<artifactId>slf4j-log4j12</artifactId>
 		<version>1.7.7</version>
 	</dependency>
- 	<!-- log -->
+	  <dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-api</artifactId>
+		  <version>1.7.12</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>ch.qos.logback</groupId>
+		  <artifactId>logback-core</artifactId>
+		  <version>1.1.2</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>ch.qos.logback</groupId>
+		  <artifactId>logback-classic</artifactId>
+		  <version>1.1.2</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>ch.qos.logback</groupId>
+		  <artifactId>logback-access</artifactId>
+		  <version>1.1.2</version>
+	  </dependency>
+
+	  <!-- log -->
 	
 	<!-- test -->
 	<dependency>
@@ -146,18 +182,12 @@
           <artifactId>fastjson</artifactId>
           <version>1.2.3</version>
     </dependency>
-    <!--
-  	<dependency>
-		<groupId>org.codehaus.jackson</groupId>
-		<artifactId>jackson-mapper-asl</artifactId>
-		<version>1.9.3</version>
-	</dependency>
-    -->
-    <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-databind</artifactId>
-          <version>2.4.2</version>
-    </dependency>
+	  <dependency>
+		  <groupId>org.jsoup</groupId>
+		  <artifactId>jsoup</artifactId>
+		  <version>1.8.2</version>
+	  </dependency>
+
 
       <dependency>
 		<groupId>org.apache.velocity</groupId>
@@ -171,45 +201,34 @@
 		  <version>2.4</version>
 	  </dependency>
 
-  	<!-- others -->
+	  <dependency>
+		  <groupId>commons-codec</groupId>
+		  <artifactId>commons-codec</artifactId>
+		  <version>1.10</version>
+	  </dependency>
+	  <!-- others -->
   </dependencies>
-  
-  
-  
-  <build>
-  	<plugins>
-		<plugin>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>2.0.2</version>
-			<configuration>
-				<source>1.7</source>
-				<target>1.7</target>
-				<encoding>UTF-8</encoding>
-			</configuration>
-		</plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-resources-plugin</artifactId>
-            <version>2.3</version>
-            <configuration>
-                <encoding>UTF-8</encoding>
-            </configuration>
-        </plugin>
 
-    </plugins>
-  </build>
-  
-  <modules>
-	  <module>user-common</module>
-	  <module>user-dao</module>
-	  <module>user-service</module>
-	  <module>user-controller</module>
-	  <module>user-web</module>
-	  <module>crawer</module>
-	  <module>test-guava</module>
-	  <module>mybatis-gen</module>
-	  <module>akka-test</module>
-	  <module>smarkClient</module>
-  </modules>
-	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

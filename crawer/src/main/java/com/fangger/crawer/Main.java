@@ -1,34 +1,30 @@
 package com.fangger.crawer;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.fangger.utils.httpclient.GetClient;
 import com.fangger.utils.httpclient.HttpClientBuilder;
-import com.fangger.utils.httpclient.HttpResult;
-import com.fangger.utils.httpclient.PostClient;
-import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.common.io.LineProcessor;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.http.HttpHost;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by p0po on 15-2-24.
  */
 public class Main {
     //static volatile boolean toContinue =true;
-    final static int ThreadNum = 100;
+    public static int interval = 0;
+    final static int ThreadNum = 10;
     private static final Logger logger = LoggerFactory.getLogger("success");
     public static final ExecutorService exec = Executors.newFixedThreadPool(ThreadNum);
-
+    public static final List<HttpHost> hostList = new ArrayList<>();
 
 
     private static final String filePath = "/app/Dm_Mobile.txt";
@@ -41,31 +37,63 @@ public class Main {
         String corperation = lineArray[3];//运营商
         //String areaCode = lineArray[4];//区号
 
-    if (area.equals("北京") && corperation.contains("联通") && !corperation.contains("虚拟运营商")) {
+    if (area.equals("北京") && corperation.contains("移动") && !corperation.contains("虚拟运营商")) {
         System.out.println("prefixNum = [" + prefixNum + "] area=[" + area + "] 运营商=[" + corperation + "]");
 
-        //if(Integer.valueOf(prefixNum) >= 1343678){
+        if(Integer.valueOf(prefixNum) >= 0){
             crow(prefixNum);
-            //toContinue = false;
-        //}
+            //toContinue = false;534017
+        }
     }
         return true;
     }
 
-    private static String url = "";
-
-
+    //private static String url = "https://user.lufax.com/user/service/user/check-phone-is-used?newPhoneNum=";
+    //private static String url = "https://www.fengjr.com/api/v2/register/check_mobile";
+    //private static String url = "https://www.ezubo.com/member/common/PhoneUnique/";
+     private static  String url = "https://licai.lianjia.com/register/checkUserExist?mobile=";
+    static Random random = new Random();
 
     public static void crow(String phonePre){
+
+        //HttpHost proxy = hostList.get(random.nextInt(hostList.size()));
+        //System.out.println("proxy = [" + proxy + "]");
+
         List<String> phones = genPhoneNum(phonePre);
         for(String phone:phones){
-                HttpClientBuilder httpClientBuilder = HttpClientBuilder.getClient(url+phone);
-                AThread aThread = new AThread(httpClientBuilder);
-                exec.execute(aThread);
+            HttpClientBuilder httpClientBuilder = HttpClientBuilder.getClient(url+phone);
+            //Map<String,String> map = new HashMap<>();
+            //map.put("cellphone", phone);
+            // HttpClientBuilder httpClientBuilder = HttpClientBuilder.getClient(url)
+                    //.setBody(map)
+             //       .setConnectionTimeOut(10000)
+                       // .setProxy(proxy)
+                        ;
+            AThread aThread = new AThread(httpClientBuilder);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            exec.execute(aThread);
         }
     }
 
     public static void main(String[] args) {
+
+        try {
+            List<String> lines = Files.readLines(new File("/app/proxy.txt"),Charset.defaultCharset());
+            Set<String> set = new HashSet<>();
+            for(String s:lines){
+                set.add(s);
+            }
+            for(String line:set){
+                String[] array = line.split(" ");
+                hostList.add(new HttpHost(array[0],Integer.valueOf(array[1]),array[4]));
+            }
+        } catch (IOException e) {
+            System.out.println("errr");
+        }
 
         //System.out.println("https://user.lufax.com/user/service/user/check-phone-is-used?newPhoneNum=13501011001".substring(73));
         File file = new File(filePath);
@@ -78,7 +106,7 @@ public class Main {
                             long start = System.currentTimeMillis();
                             while (((ThreadPoolExecutor)exec).getActiveCount() != 0){
                                 try {
-                                    Thread.sleep(100);
+                                    Thread.sleep(interval);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

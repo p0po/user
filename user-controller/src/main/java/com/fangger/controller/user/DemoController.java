@@ -23,8 +23,6 @@ import java.util.concurrent.Callable;
 public class DemoController {
     Logger logger = LoggerFactory.getLogger(DemoController.class);
 
-
-
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public String helloWorld() {

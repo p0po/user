@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -26,22 +27,38 @@ public class AThread implements Runnable {
     public AThread(HttpClientBuilder httpClientBuilder){
         this.httpClientBuilder = httpClientBuilder;
     }
+
+    static Random random = new Random();
+
     @Override
     public void run() {
-        //System.out.println(httpClientBuilder.getUrl());
+        try {
+            Thread.sleep(Main.interval+random.nextInt(9));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //String phone = httpClientBuilder.getBody().get("cellphone");
+        String phone = httpClientBuilder.getUrl();
+        phone = phone.substring(phone.lastIndexOf("=")+1,phone.length());
+        //System.out.println(httpClientBuilder.getUrl().substring());
         try {
            HttpResult httpResult = httpClientBuilder.get();
             if(httpResult.getStatusCode() == 200){
-                if(httpResult.getBody().length()>20){
+                if(httpResult.getBody().equals("{\"result\":false,\"tips\":\"此手机已是链家网注册账户\"}")){
+                   success(phone);
+               }
+                /*if(httpResult.getBody().length()>20){
                     success(httpClientBuilder.getUrl().substring(73));
-                }
+                }*/
                 //成功处理
             }else {
-                failure(httpClientBuilder.getUrl().substring(73));
+                System.out.println(httpResult.getStatusCode()+" "+httpResult.getBody());
+                failure(phone+"  "+httpResult.getStatusCode());
                 //失败处理
             }
         } catch (IOException e) {
-            failure(httpClientBuilder.getUrl().substring(73));
+            failure(phone+" "+e.getMessage());
             //失败处理
             //e.printStackTrace();
         }
@@ -52,6 +69,7 @@ public class AThread implements Runnable {
     }
 
     public void failure(String phone){
+        Main.interval = 0;
         failLogger.info("{}",phone);
     }
 }

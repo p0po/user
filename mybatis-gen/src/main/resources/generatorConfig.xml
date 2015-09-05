@@ -35,20 +35,27 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.fangger.model" targetProject="/app/workspace/user/user-dao-auto-gen/src/main/java">
+        <javaModelGenerator targetPackage="com.fangger.model" targetProject="D:\p0po\workspace\spring-mvc\base-model\src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.fangger.mapper" targetProject="/app/workspace/user/user-dao-auto-gen/src/main/resources"/>
+        <sqlMapGenerator targetPackage="com.fangger.mapper" targetProject="D:\p0po\workspace\spring-mvc\base-dao\src\main\resources"/>
 
-        <javaClientGenerator targetPackage="com.fangger.mapper" targetProject="/app/workspace/user/user-dao-auto-gen/src/main/java" type="XMLMAPPER"/>
+        <javaClientGenerator targetPackage="com.fangger.mapper" targetProject="D:\p0po\workspace\spring-mvc\base-dao\src\main\java" type="XMLMAPPER"/>
 
-        <table tableName="xiaoqu" domainObjectName="XiaoQu">
-            <generatedKey column="id" identity="true" sqlStatement="mysql"/>
+        <table tableName="user" domainObjectName="User">
+            <generatedKey column="ID" identity="true" sqlStatement="mysql"/>
             <!--
             <columnOverride column="type" javaType="com.krplus.enums.OrgType"></columnOverride>
             -->
         </table>
+        <table tableName="passport" domainObjectName="Passport">
+            <generatedKey column="ID" identity="true" sqlStatement="mysql"/>
+            <!--
+            <columnOverride column="type" javaType="com.krplus.enums.OrgType"></columnOverride>
+            -->
+        </table>
+
     </context>
 </generatorConfiguration>
