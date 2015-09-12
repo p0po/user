@@ -1,6 +1,7 @@
 package com.fangger.filter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import java.util.Map;
  * Created by popo on 2014/10/6.
  */
 public class XssFilter implements Filter {
-    private static Logger logger = Logger.getLogger(XssFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(XssFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

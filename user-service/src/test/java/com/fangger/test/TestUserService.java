@@ -24,7 +24,7 @@ public class TestUserService {
     @Test
     public void testAdd(){
         User user = new User();
-        user.setNickname("testUser");
+        user.setNickname("testUser1");
         user.setGender(false);
         user.setSource(UserSourceEnum.WEB.name());
 

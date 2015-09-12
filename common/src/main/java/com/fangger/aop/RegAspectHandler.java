@@ -1,10 +1,11 @@
 package com.fangger.aop;
 
 import com.fangger.annotation.Reg;
-import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
@@ -17,7 +18,7 @@ import java.util.regex.Pattern;
 @Aspect
 @Component
 public class RegAspectHandler {
-    static final Logger logger = Logger.getLogger(RegAspectHandler.class);
+    static final Logger logger = LoggerFactory.getLogger(RegAspectHandler.class);
 
     public RegAspectHandler() {
         if (logger.isDebugEnabled()) {

@@ -8,16 +8,16 @@
     </appender>
 
     <appender name="localFile" class="ch.qos.logback.core.FileAppender">
-        <file>${fileDir}/app.log</file>
+        <file>${fileDir}/web.log</file>
+        <encoder>
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
     </appender>
-
 
     <logger name="com.fangger" level="DEBUG" />
     <logger name="org.springframework" level="DEBUG" />
 
-    <root>
-        <level value="DEBUG" />
-        <appender-ref ref="console" />
+    <root level="DEBUG">
         <appender-ref ref="localFile"/>
     </root>
 </configuration>
