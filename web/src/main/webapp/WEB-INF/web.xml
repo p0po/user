@@ -8,7 +8,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/classes/spring-mvc*.xml</param-value>
+        <param-value>classpath*:spring-mvc*.xml</param-value>
     </context-param>
 
 
@@ -18,7 +18,7 @@
         </servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath*</param-value>
+            <param-value>classpath*:spring-mvc*.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported>
@@ -31,7 +31,7 @@
 
     <filter>
         <filter-name>xssFilter</filter-name>
-        <filter-class>com.fangger.filter.XssFilter</filter-class>
+        <filter-class>net.yongpo.filter.XssFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
 
@@ -60,8 +60,18 @@
         </listener-class>
     </listener>
 
+    <filter>
+        <filter-name>E-TAG</filter-name>
+        <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>E-TAG</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <listener>
-        <listener-class>com.fangger.init.Init</listener-class>
+        <listener-class>net.yongpo.init.Init</listener-class>
     </listener>
 
     <welcome-file-list>

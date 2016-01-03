@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<configuration scan="true" scanPeriod="30 seconds">
+<configuration scan="true" scanPeriod="30 seconds" debug="true">
     <property name="fileDir" value="/logs/" />
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -14,10 +14,11 @@
         </encoder>
     </appender>
 
-    <logger name="com.fangger" level="DEBUG" />
+    <logger name="net.yongpo" level="DEBUG" />
     <logger name="org.springframework" level="DEBUG" />
 
     <root level="DEBUG">
+        <appender-ref ref="console"/>
         <appender-ref ref="localFile"/>
     </root>
 </configuration>

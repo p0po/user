@@ -35,13 +35,13 @@
         <property name="asyncRequestTimeout" value="120000"></property>
     </bean>
 
-    <context:component-scan base-package="com.fangger" />
+    <context:component-scan base-package="net.yongpo" />
 
     <aop:aspectj-autoproxy />
 
 	<tx:annotation-driven proxy-target-class="true" />
 
-	<import resource="classpath*:applicationContext-dataSource.xml" />
+	<import resource="classpath*:spring-mvc-dataSource.xml" />
 <!--
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>
 -->

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!--  <classPathEntry location="D:\maven-repository\mysql\mysql-connector-java\5.1.29\mysql-connector-java-5.1.29.jar"/>  -->
+    <properties resource="mysql.properties"></properties>
+
+    <context id="context1" targetRuntime="MyBatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$"/>
+            <property name="replaceString" value="Condition"/>
+        </plugin>
+
+        <plugin type="net.yongpo.mybatiesgen.RenameExampleAndPrimaryKeyPlugin" />
+        <plugin type="net.yongpo.mybatiesgen.MysqlPagingPlugin" />
+        <plugin type="net.yongpo.mybatiesgen.CommentPlugin">
+            <!-- 制定java bean的作者，默认情况下会读取计算机当前用户作为作者 -->
+            <!--<property name="modelClassAuthor" value="p0po" />-->
+        </plugin>
+
+        <commentGenerator>
+            <!-- 不生成原生的注解信息 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <jdbcConnection
+                driverClass="${driver}"
+                connectionURL="${url}"
+                userId="${username}"
+                password="${password}"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="net.yongpo.model" targetProject="D:\p0po\workspace\spring-mvc\dao\base-model\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="net.yongpo.mapper" targetProject="D:\p0po\workspace\spring-mvc\dao\base-dao\src\main\resources"/>
+
+        <javaClientGenerator targetPackage="net.yongpo.mapper" targetProject="D:\p0po\workspace\spring-mvc\dao\base-dao\src\main\java" type="XMLMAPPER"/>
+
+        <table tableName="user" domainObjectName="User">
+            <generatedKey column="ID" identity="true" sqlStatement="mysql"/>
+            <!--
+            <columnOverride column="type" javaType="net.yongpo.enums.OrgType"></columnOverride>
+            -->
+        </table>
+        <table tableName="passport" domainObjectName="Passport">
+            <generatedKey column="ID" identity="true" sqlStatement="mysql"/>
+            <!--
+            <columnOverride column="type" javaType="net.yongpo.enums.OrgType"></columnOverride>
+            -->
+        </table>
+
+    </context>
+</generatorConfiguration>

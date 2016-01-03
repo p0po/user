@@ -18,7 +18,7 @@
     <mvc:annotation-driven enable-matrix-variables="true"/>   
     <tx:annotation-driven />
     
-    <context:component-scan base-package="com.fangger.controllers"/>
+    <context:component-scan base-package="net.yongpo.controllers"/>
  
-    <import resource="classpath:applicationContext-dataSource.xml"/> 
+    <import resource="classpath:spring-mvc-dataSource.xml"/>
 </beans>
