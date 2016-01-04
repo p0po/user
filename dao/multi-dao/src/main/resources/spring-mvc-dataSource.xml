@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 	   default-lazy-init="true">
-
+	<context:property-placeholder  order="1" ignore-unresolvable="true"/>
 	<!-- 使用c3p0连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hezu?useUnicode=true&amp;characterEncoding=utf8" />
-		<property name="user" value="root" />
-		<property name="password" value="" />
+		<property name="user" value="${mysql.user}" />
+		<property name="password" value="${mysql.pass}" />
 		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
 		<property name="acquireIncrement" value="3" />
 		<!--初始化时获取连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->

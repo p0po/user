@@ -1,7 +1,6 @@
 package net.yongpo.controller.user;
 
 
-import net.yongpo.mapper.UserMapper;
 import net.yongpo.model.Passport;
 import net.yongpo.model.User;
 import net.yongpo.service.UserService;
