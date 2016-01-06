@@ -8,7 +8,7 @@
     <result column="PHONE" property="phone" jdbcType="BIGINT" />
     <result column="EMAIL" property="email" jdbcType="VARCHAR" />
     <result column="GENDER" property="gender" jdbcType="BIT" />
-    <result column="BIRTHDAY" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" />
     <result column="SOURCE" property="source" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
@@ -115,13 +115,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into user (NICKNAME, REAL_NAME, PHONE, 
-      EMAIL, GENDER, BIRTHDAY, 
-      SOURCE, CREATE_TIME, UPDATE_TIME, 
-      DELETED, CITY)
+      EMAIL, GENDER, BIRTHDAY, SOURCE, 
+      CREATE_TIME, UPDATE_TIME, DELETED, 
+      CITY)
     values (#{nickname,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, 
-      #{email,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, #{birthday,jdbcType=TIMESTAMP}, 
-      #{source,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{deleted,jdbcType=BIT}, #{city,jdbcType=INTEGER})
+      #{email,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, #{birthday,jdbcType=DATE}, #{source,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, 
+      #{city,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="net.yongpo.model.User" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -180,7 +180,7 @@
         #{gender,jdbcType=BIT},
       </if>
       <if test="birthday != null" >
-        #{birthday,jdbcType=TIMESTAMP},
+        #{birthday,jdbcType=DATE},
       </if>
       <if test="source != null" >
         #{source,jdbcType=VARCHAR},
@@ -227,7 +227,7 @@
         GENDER = #{record.gender,jdbcType=BIT},
       </if>
       <if test="record.birthday != null" >
-        BIRTHDAY = #{record.birthday,jdbcType=TIMESTAMP},
+        BIRTHDAY = #{record.birthday,jdbcType=DATE},
       </if>
       <if test="record.source != null" >
         SOURCE = #{record.source,jdbcType=VARCHAR},
@@ -257,7 +257,7 @@
       PHONE = #{record.phone,jdbcType=BIGINT},
       EMAIL = #{record.email,jdbcType=VARCHAR},
       GENDER = #{record.gender,jdbcType=BIT},
-      BIRTHDAY = #{record.birthday,jdbcType=TIMESTAMP},
+      BIRTHDAY = #{record.birthday,jdbcType=DATE},
       SOURCE = #{record.source,jdbcType=VARCHAR},
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -286,7 +286,7 @@
         GENDER = #{gender,jdbcType=BIT},
       </if>
       <if test="birthday != null" >
-        BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
+        BIRTHDAY = #{birthday,jdbcType=DATE},
       </if>
       <if test="source != null" >
         SOURCE = #{source,jdbcType=VARCHAR},
@@ -313,7 +313,7 @@
       PHONE = #{phone,jdbcType=BIGINT},
       EMAIL = #{email,jdbcType=VARCHAR},
       GENDER = #{gender,jdbcType=BIT},
-      BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
+      BIRTHDAY = #{birthday,jdbcType=DATE},
       SOURCE = #{source,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
