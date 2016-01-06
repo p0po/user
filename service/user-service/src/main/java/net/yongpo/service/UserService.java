@@ -10,6 +10,7 @@ import com.google.common.base.Preconditions;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 @Service
 public class UserService {
-    static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserService.class);
+    static final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     UserMapper userMapper;
     @Autowired
@@ -60,7 +61,7 @@ public class UserService {
          */
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());
-        userMapper.insert(user);
+        userMapper.insertSelective(user);
         logger.info("add user:{}", user);
 
         /**
@@ -89,14 +90,14 @@ public class UserService {
      * @param password
      * @return
      */
-    boolean loginByNickName(String name,String password){
+    public boolean loginByNickName(String name,String password){
         UserCondition userCondition = new UserCondition();
         userCondition.createCriteria().andNicknameEqualTo(name);
         List<User> userList = userMapper.selectByCondition(userCondition);
         if(CollectionUtils.isNotEmpty(userList)){
             User user = userList.get(0);
             PassportCondition passportCondition = new PassportCondition();
-            passportCondition.createCriteria().andIdEqualTo(user.getId());
+            passportCondition.createCriteria().andUserIdEqualTo(user.getId());
             List<Passport> passportList = passportMapper.selectByCondition(passportCondition);
 
             if(CollectionUtils.isNotEmpty(passportList)){
@@ -115,14 +116,14 @@ public class UserService {
      * @param password
      * @return
      */
-    boolean loginByEmail(String email,String password){
+    public boolean loginByEmail(String email,String password){
         UserCondition userCondition = new UserCondition();
         userCondition.createCriteria().andEmailEqualTo(email);
         List<User> userList = userMapper.selectByCondition(userCondition);
         if(CollectionUtils.isNotEmpty(userList)){
             User user = userList.get(0);
             PassportCondition passportCondition = new PassportCondition();
-            passportCondition.createCriteria().andIdEqualTo(user.getId());
+            passportCondition.createCriteria().andUserIdEqualTo(user.getId());
             List<Passport> passportList = passportMapper.selectByCondition(passportCondition);
 
             if(CollectionUtils.isNotEmpty(passportList)){
@@ -140,14 +141,14 @@ public class UserService {
      * @param password
      * @return
      */
-    boolean loginByPhone(long phone,String password){
+    public boolean loginByPhone(long phone,String password){
         UserCondition userCondition = new UserCondition();
         userCondition.createCriteria().andPhoneEqualTo(phone);
         List<User> userList = userMapper.selectByCondition(userCondition);
         if(CollectionUtils.isNotEmpty(userList)){
             User user = userList.get(0);
             PassportCondition passportCondition = new PassportCondition();
-            passportCondition.createCriteria().andIdEqualTo(user.getId());
+            passportCondition.createCriteria().andUserIdEqualTo(user.getId());
             List<Passport> passportList = passportMapper.selectByCondition(passportCondition);
 
             if(CollectionUtils.isNotEmpty(passportList)){
