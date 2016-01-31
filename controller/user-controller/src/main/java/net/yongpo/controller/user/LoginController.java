@@ -5,8 +5,8 @@ import net.yongpo.model.Passport;
 import net.yongpo.model.User;
 import net.yongpo.service.UserService;
 import net.yongpo.service.UserSourceEnum;
+import net.yongpo.utils.StringUtils;
 import net.yongpo.utils.json.JsonResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,11 +72,39 @@ public class LoginController {
     public Object reg(
             @RequestParam(value = "nick_name",required = true)String nickName,
             @RequestParam(value = "password",required = true)String password,
-            @RequestParam(value = "phone",required = false,defaultValue = "0")long phone,
-            @RequestParam(value = "email",required = false,defaultValue = "")String email,
-            @RequestParam(value = "gender",required = false,defaultValue = "true")boolean gender,//true 1,默认是男
+            @RequestParam(value = "email",required = true)String email,
+            @RequestParam(value = "phone",required = false)long phone,
+            @RequestParam(value = "gender",required = false)boolean gender,
             @RequestParam(value = "birth",required = false)long birth
     ){
+        if(StringUtils.isEmpty(email)){
+            return JsonResponse.bad("email 必须填写");
+        }
+
+        if(!StringUtils.isEmail(email)){
+            return JsonResponse.bad("email 不合法");
+        }
+
+        if(StringUtils.isEmpty(nickName)){
+            return JsonResponse.bad("昵称 必须填写");
+        }
+
+        if(!StringUtils.isAlphanumeric(nickName)){
+            return JsonResponse.bad("用户名只允许小写字符和数字");
+        }
+
+        if(nickName.length()<4){
+            return JsonResponse.bad("用户名至少4个字符");
+        }
+
+        if(StringUtils.isEmpty(password)){
+            return JsonResponse.bad("密码不允许为空");
+        }
+
+        if(password.length()<6){
+            return JsonResponse.bad("密码至少6个字符");
+        }
+
         logger.info("nickName:{},phone:{},email:{},password:{},gender:{}", nickName, phone, email, password,gender);
         User user = new User();
         user.setNickname(nickName);
@@ -93,6 +121,5 @@ public class LoginController {
 
         return userId>0?JsonResponse.ok():JsonResponse.bad();
     }
-
 
 }

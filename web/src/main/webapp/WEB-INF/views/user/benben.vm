@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ruopu.wang</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/bb.css" rel="stylesheet">
+    <link href="/css/bb-r.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+</head>
+<body class="tooltips">
+
+<!--
+===========================================================
+BEGIN PAGE
+===========================================================
+-->
+<div class="container">
+
+    <!-- BEGIN LOGO -->
+    <!--
+    <div class="logo"><img src="assets/img/logo.png" alt="logo"></div>
+    -->
+    <!-- END LOGO -->
+
+    <h1 class="heading text-center" id="ttd">Our Wesbite is Coming Soon</h1>
+
+
+    <!-- BEGIN COUNTER -->
+    <div class="counter-wrap">
+        <div id="ymdh">
+            <div class='counter-item bg-danger'>
+                <h1>232</h1><p>days</p>
+            </div>
+            <div class='counter-item bg-warning'>
+                <h1>3</h1><p>hours</p>
+            </div>
+            <div class='counter-item bg-success'>
+                <h1>6</h1><p>min</p>
+            </div>
+            <div class='counter-item bg-info'>
+                <h1>12</h1><p>sec</p>
+            </div>
+        </div>
+    </div><!-- /.counter-wrap -->
+    <!-- END COUNTER -->
+
+    <p class="text-center about-text">
+        Wish you grow up happy and healthy! Dad and Mum will love you forever!
+    </p>
+
+    <!-- BEGIN FOOTER -->
+    <footer>
+        Copyright &copy; 2014 ruopu.wang
+    </footer>
+    <!-- END FOOTER -->
+
+</div><!-- /.container -->
+<!--
+===========================================================
+END PAGE
+===========================================================
+-->
+
+
+<!--
+===========================================================
+Placed at the end of the document so the pages load faster
+===========================================================
+-->
+<!-- MAIN JAVASRCIPT (REQUIRED ALL PAGE)-->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/retina.js/1.3.0/retina.min.js"></script>
+<script src="//cdn.bootcss.com/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+<!--
+<script src="//cdn.bootcss.com/jquery-countdown/2.0.0/jquery.countdown.min.js"></script>
+-->
+<script>
+
+    /** Tooltip **/
+    $('.tooltips').tooltip({
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    });
+
+    /** Full background **/
+    $.backstretch([ "http://7xnpq3.com1.z0.glb.clouddn.com/rpBingWallpaper-2016-01-30.jpg"], {duration: 3000, fade: 750});
+
+    function formateDate(date){
+        console.info(date.getFullYear()+"年"+(date.getMonth()+1)+"月"+date.getDate()+"日 "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
+    }
+
+    function getDaysOfYears(time){
+        return time.getYear()%4==0?366:365;
+    }
+
+    function getDaysOfMonth(time){
+        switch(time.getMonth()+1){
+            case 1:return 31;break;
+            case 2:return getDaysOfYears()==366?29:28;break;
+            case 3:return 31;break;
+            case 4:return 30;break;
+            case 5:return 31;break;
+            case 6:return 30;break;
+            case 7:return 31;break;
+            case 8:return 31;break;
+            case 9:return 30;break;
+            case 10:return 31;break;
+            case 11:return 30;break;
+            case 12:return 31;break;
+        }
+    }
+
+    /** Counter **/
+    $(function() {
+        var birthDay = new Date(2014,06,16,11,50,00);
+        formateDate(birthDay);
+        var now = new Date();
+        formateDate(now);
+        var millonSeconds = now.getTime()-birthDay.getTime()
+        console.info(millonSeconds+' ms');
+        var dayNum = Math.floor(millonSeconds/1000/60/60/24);
+        console.info("共 "+dayNum+' 天');
+
+        var millionSeconds = now.getMilliseconds()-birthDay.getMilliseconds();
+        var seconds = now.getSeconds()-birthDay.getSeconds();
+        seconds = millionSeconds<0?(seconds-1):seconds;
+        var minuteInt = now.getMinutes()-birthDay.getMinutes();
+        minuteInt = seconds<0?(minuteInt-1):minuteInt;
+        var hourInt = now.getHours()-birthDay.getHours();
+        hourInt = minuteInt<0?(hourInt-1):hourInt;
+        var dayInt = now.getDate()-birthDay.getDate();
+        dayInt = hourInt<0?(dayInt-1):dayInt;
+        var montInt = now.getMonth() - birthDay.getMonth();
+        montInt = dayInt<0?(montInt-1):montInt;
+        var yearInt = now.getYear()-birthDay.getYear();
+        yearInt = montInt<0?(yearInt-1):yearInt;
+
+        millionSeconds = millionSeconds<0?(1000+millionSeconds):millionSeconds;
+        seconds = seconds<0?(60+seconds):seconds
+        minuteInt = minuteInt<0?(60+minuteInt):minuteInt;
+        hourInt = hourInt<0?(24+hourInt):hourInt;
+        montInt = montInt<0?(12+montInt):montInt;
+        dayInt = dayInt<0?(getDaysOfMonth(birthDay)+dayInt):dayInt;
+
+        $('#ttd').html("ruopu.wang has been "+dayNum+" days");
+        $('#ymdh').html("<div class='counter-item bg-danger'><h1>" + yearInt + "</h1><p>years</p></div><div class='counter-item bg-warning'><h1>" + montInt + "</h1><p>months</p></div><div class='counter-item bg-success'><h1>" + dayInt + "</h1><p>days</p></div><div class='counter-item bg-info'><h1>" + hourInt + "</h1><p>hours</p></div>");
+        /*$.ajax(
+                'http://www.114time.com/api/clock.php',
+                {
+                    type:'get',
+                    dataType : 'jsonp',
+                    jsonp:"callback",
+                    success  : function(data) {
+                        alert(data);
+                    },
+                    error : function() {
+                        alert('fail');
+                    }
+                }
+        );*/
+
+        /*$('#countdown-timer').countdown({
+            date: endDate,
+            render: function(data) {
+                $(this.el).html("<div class='counter-item bg-danger'><h1>" + this.leadingZeros(data.days, 3) + "</h1><p>days</p></div><div class='counter-item bg-warning'><h1>" + this.leadingZeros(data.hours, 2) + "</h1><p>hours</p></div><div class='counter-item bg-success'><h1>" + this.leadingZeros(data.min, 2) + "</h1><p>min</p></div><div class='counter-item bg-info'><h1>" + this.leadingZeros(data.sec, 2) + "</h1><p>sec</p></div>");
+            }
+        });*/
+
+    });
+
+
+
+</script>
+
+</body>
+</html>

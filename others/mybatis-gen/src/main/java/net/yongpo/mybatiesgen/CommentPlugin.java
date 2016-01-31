@@ -12,11 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Desc:
- * User: HaiNan.Wang
- * Date: 14/12/31
- */
 public class CommentPlugin extends PluginAdapter {
     private static final String AUTHOR = "modelClassAuthor";
 
