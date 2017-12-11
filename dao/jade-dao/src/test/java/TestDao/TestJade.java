@@ -1,11 +1,14 @@
 package TestDao;
 
 import net.yongpo.dao.TestDAO;
+import net.yongpo.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 /**
  * Created by p0po on 15-3-21.
@@ -18,6 +21,7 @@ public class TestJade {
 
     @Test
     public void testJade(){
-        testDAO.getAll();
+        List<User> userList = testDAO.getAll();
+        System.out.println(userList.size());
     }
 }

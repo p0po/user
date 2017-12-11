@@ -16,6 +16,8 @@ public class UserCondition {
 
     protected int limitSize = 1;
 
+    protected String index;
+
     public UserCondition() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -83,6 +85,14 @@ public class UserCondition {
 
     public int getLimitSize() {
         return limitSize;
+    }
+
+    public void setIndex(String index) {
+        this.index=index;
+    }
+
+    public String getIndex() {
+        return this.index;
     }
 
     protected abstract static class GeneratedCriteria {
@@ -852,63 +862,73 @@ public class UserCondition {
             return (Criteria) this;
         }
 
-        public Criteria andCityIsNull() {
-            addCriterion("CITY is null");
+        public Criteria andOpenidIsNull() {
+            addCriterion("OPENID is null");
             return (Criteria) this;
         }
 
-        public Criteria andCityIsNotNull() {
-            addCriterion("CITY is not null");
+        public Criteria andOpenidIsNotNull() {
+            addCriterion("OPENID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCityEqualTo(Integer value) {
-            addCriterion("CITY =", value, "city");
+        public Criteria andOpenidEqualTo(String value) {
+            addCriterion("OPENID =", value, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityNotEqualTo(Integer value) {
-            addCriterion("CITY <>", value, "city");
+        public Criteria andOpenidNotEqualTo(String value) {
+            addCriterion("OPENID <>", value, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityGreaterThan(Integer value) {
-            addCriterion("CITY >", value, "city");
+        public Criteria andOpenidGreaterThan(String value) {
+            addCriterion("OPENID >", value, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityGreaterThanOrEqualTo(Integer value) {
-            addCriterion("CITY >=", value, "city");
+        public Criteria andOpenidGreaterThanOrEqualTo(String value) {
+            addCriterion("OPENID >=", value, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityLessThan(Integer value) {
-            addCriterion("CITY <", value, "city");
+        public Criteria andOpenidLessThan(String value) {
+            addCriterion("OPENID <", value, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityLessThanOrEqualTo(Integer value) {
-            addCriterion("CITY <=", value, "city");
+        public Criteria andOpenidLessThanOrEqualTo(String value) {
+            addCriterion("OPENID <=", value, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityIn(List<Integer> values) {
-            addCriterion("CITY in", values, "city");
+        public Criteria andOpenidLike(String value) {
+            addCriterion("OPENID like", value, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityNotIn(List<Integer> values) {
-            addCriterion("CITY not in", values, "city");
+        public Criteria andOpenidNotLike(String value) {
+            addCriterion("OPENID not like", value, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityBetween(Integer value1, Integer value2) {
-            addCriterion("CITY between", value1, value2, "city");
+        public Criteria andOpenidIn(List<String> values) {
+            addCriterion("OPENID in", values, "openid");
             return (Criteria) this;
         }
 
-        public Criteria andCityNotBetween(Integer value1, Integer value2) {
-            addCriterion("CITY not between", value1, value2, "city");
+        public Criteria andOpenidNotIn(List<String> values) {
+            addCriterion("OPENID not in", values, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidBetween(String value1, String value2) {
+            addCriterion("OPENID between", value1, value2, "openid");
+            return (Criteria) this;
+        }
+
+        public Criteria andOpenidNotBetween(String value1, String value2) {
+            addCriterion("OPENID not between", value1, value2, "openid");
             return (Criteria) this;
         }
     }

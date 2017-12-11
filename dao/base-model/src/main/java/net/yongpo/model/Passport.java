@@ -7,39 +7,36 @@ import java.util.Date;
  * 
  *
  * @author benben
- * @date 2016-1-6
+ * @date 2017-12-10
  *
  */
 public class Passport implements Serializable {
     /**  */
     private Integer id;
 
-    /**  */
+    /** 用户ID */
     private Integer userId;
 
-    /**  */
+    /** 密码 */
     private String password;
 
-    /**  */
+    /** 密码盐 */
     private String salt;
 
-    /**  */
+    /** 上次登录时间 */
     private Date lastLoginTime;
 
-    /**  */
+    /** 上次登录IP */
     private String lastLoginIp;
 
-    /**  */
+    /** 上次登录UA */
     private String lastLoginUa;
 
-    /**  */
-    private Integer failureCount;
-
-    /**  */
-    private String source;
-
-    /**  */
+    /** 更新时间 */
     private Date updateTime;
+
+    /** 密码更新时间 */
+    private Date passwordSetTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -99,27 +96,19 @@ public class Passport implements Serializable {
         this.lastLoginUa = lastLoginUa == null ? null : lastLoginUa.trim();
     }
 
-    public Integer getFailureCount() {
-        return failureCount;
-    }
-
-    public void setFailureCount(Integer failureCount) {
-        this.failureCount = failureCount;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source == null ? null : source.trim();
-    }
-
     public Date getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Date getPasswordSetTime() {
+        return passwordSetTime;
+    }
+
+    public void setPasswordSetTime(Date passwordSetTime) {
+        this.passwordSetTime = passwordSetTime;
     }
 }

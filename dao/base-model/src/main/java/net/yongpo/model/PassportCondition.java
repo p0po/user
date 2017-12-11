@@ -15,6 +15,8 @@ public class PassportCondition {
 
     protected int limitSize = 1;
 
+    protected String index;
+
     public PassportCondition() {
         oredCriteria = new ArrayList<Criteria>();
     }
@@ -82,6 +84,14 @@ public class PassportCondition {
 
     public int getLimitSize() {
         return limitSize;
+    }
+
+    public void setIndex(String index) {
+        this.index=index;
+    }
+
+    public String getIndex() {
+        return this.index;
     }
 
     protected abstract static class GeneratedCriteria {
@@ -585,136 +595,6 @@ public class PassportCondition {
             return (Criteria) this;
         }
 
-        public Criteria andFailureCountIsNull() {
-            addCriterion("FAILURE_COUNT is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountIsNotNull() {
-            addCriterion("FAILURE_COUNT is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountEqualTo(Integer value) {
-            addCriterion("FAILURE_COUNT =", value, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountNotEqualTo(Integer value) {
-            addCriterion("FAILURE_COUNT <>", value, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountGreaterThan(Integer value) {
-            addCriterion("FAILURE_COUNT >", value, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("FAILURE_COUNT >=", value, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountLessThan(Integer value) {
-            addCriterion("FAILURE_COUNT <", value, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountLessThanOrEqualTo(Integer value) {
-            addCriterion("FAILURE_COUNT <=", value, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountIn(List<Integer> values) {
-            addCriterion("FAILURE_COUNT in", values, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountNotIn(List<Integer> values) {
-            addCriterion("FAILURE_COUNT not in", values, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountBetween(Integer value1, Integer value2) {
-            addCriterion("FAILURE_COUNT between", value1, value2, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andFailureCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("FAILURE_COUNT not between", value1, value2, "failureCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceIsNull() {
-            addCriterion("SOURCE is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceIsNotNull() {
-            addCriterion("SOURCE is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceEqualTo(String value) {
-            addCriterion("SOURCE =", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceNotEqualTo(String value) {
-            addCriterion("SOURCE <>", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceGreaterThan(String value) {
-            addCriterion("SOURCE >", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceGreaterThanOrEqualTo(String value) {
-            addCriterion("SOURCE >=", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceLessThan(String value) {
-            addCriterion("SOURCE <", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceLessThanOrEqualTo(String value) {
-            addCriterion("SOURCE <=", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceLike(String value) {
-            addCriterion("SOURCE like", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceNotLike(String value) {
-            addCriterion("SOURCE not like", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceIn(List<String> values) {
-            addCriterion("SOURCE in", values, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceNotIn(List<String> values) {
-            addCriterion("SOURCE not in", values, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceBetween(String value1, String value2) {
-            addCriterion("SOURCE between", value1, value2, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceNotBetween(String value1, String value2) {
-            addCriterion("SOURCE not between", value1, value2, "source");
-            return (Criteria) this;
-        }
-
         public Criteria andUpdateTimeIsNull() {
             addCriterion("UPDATE_TIME is null");
             return (Criteria) this;
@@ -772,6 +652,66 @@ public class PassportCondition {
 
         public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
             addCriterion("UPDATE_TIME not between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeIsNull() {
+            addCriterion("PASSWORD_SET_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeIsNotNull() {
+            addCriterion("PASSWORD_SET_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeEqualTo(Date value) {
+            addCriterion("PASSWORD_SET_TIME =", value, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeNotEqualTo(Date value) {
+            addCriterion("PASSWORD_SET_TIME <>", value, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeGreaterThan(Date value) {
+            addCriterion("PASSWORD_SET_TIME >", value, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("PASSWORD_SET_TIME >=", value, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeLessThan(Date value) {
+            addCriterion("PASSWORD_SET_TIME <", value, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeLessThanOrEqualTo(Date value) {
+            addCriterion("PASSWORD_SET_TIME <=", value, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeIn(List<Date> values) {
+            addCriterion("PASSWORD_SET_TIME in", values, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeNotIn(List<Date> values) {
+            addCriterion("PASSWORD_SET_TIME not in", values, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeBetween(Date value1, Date value2) {
+            addCriterion("PASSWORD_SET_TIME between", value1, value2, "passwordSetTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPasswordSetTimeNotBetween(Date value1, Date value2) {
+            addCriterion("PASSWORD_SET_TIME not between", value1, value2, "passwordSetTime");
             return (Criteria) this;
         }
     }

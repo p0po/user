@@ -5,6 +5,7 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.internal.db.ConnectionFactory;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Created by p0po on 2015/6/1 0001.
+ */
 public class CommentPlugin extends PluginAdapter {
     private static final String AUTHOR = "modelClassAuthor";
 
@@ -61,7 +65,6 @@ public class CommentPlugin extends PluginAdapter {
         return true;
     }
 
-    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }
@@ -81,8 +84,8 @@ public class CommentPlugin extends PluginAdapter {
     }
 
     public static void generate() {
-        String config = CommentPlugin.class.getClassLoader().getResource("generatorConfig.xml").getFile();
-        String[] arg = { "-configfile", config, "-overwrite" };
+        URL config = CommentPlugin.class.getClassLoader().getResource("generatorConfig.xml");
+        String[] arg = { "-configfile", config.getFile(), "-overwrite" };
         ShellRunner.main(arg);
     }
 

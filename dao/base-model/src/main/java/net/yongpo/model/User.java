@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  *
  * @author benben
- * @date 2016-1-6
+ * @date 2017-12-10
  *
  */
 public class User implements Serializable {
@@ -44,8 +44,8 @@ public class User implements Serializable {
     /** 是否删除 */
     private Boolean deleted;
 
-    /** 城市 */
-    private Integer city;
+    /** 微信ID */
+    private String openid;
 
     private static final long serialVersionUID = 1L;
 
@@ -137,11 +137,11 @@ public class User implements Serializable {
         this.deleted = deleted;
     }
 
-    public Integer getCity() {
-        return city;
+    public String getOpenid() {
+        return openid;
     }
 
-    public void setCity(Integer city) {
-        this.city = city;
+    public void setOpenid(String openid) {
+        this.openid = openid == null ? null : openid.trim();
     }
 }

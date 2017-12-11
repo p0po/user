@@ -1,12 +1,9 @@
 package net.yongpo.controller.user;
 
-import net.yongpo.dao.TestDAO;
-import net.yongpo.mapper.UserMapper;
 import net.yongpo.utils.json.JsonResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +16,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 @Controller
@@ -27,14 +23,14 @@ import java.util.concurrent.Callable;
 public class DemoController {
     Logger logger = LoggerFactory.getLogger(DemoController.class);
 
-    @Autowired
-    TestDAO testDAO;
+    /*@Autowired
+    TestDAO testDAO;*/
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+   /* @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public Object helloWorld() {
         return testDAO.getAll();
-    }
+    }*/
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public String helloView(Model model) {

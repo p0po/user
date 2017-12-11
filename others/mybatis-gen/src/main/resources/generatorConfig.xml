@@ -17,9 +17,11 @@
         <plugin type="net.yongpo.mybatiesgen.RenameExampleAndPrimaryKeyPlugin" />
         <plugin type="net.yongpo.mybatiesgen.MysqlPagingPlugin" />
         <plugin type="net.yongpo.mybatiesgen.CommentPlugin">
+
             <!-- 制定java bean的作者，默认情况下会读取计算机当前用户作为作者 -->
             <!--<property name="modelClassAuthor" value="p0po" />-->
         </plugin>
+        <plugin type="net.yongpo.mybatiesgen.ForceIndexPlugin"/>
 
         <commentGenerator>
             <!-- 不生成原生的注解信息 -->
@@ -35,14 +37,14 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="net.yongpo.model" targetProject="D:\p0po\workspace\spring-mvc\dao\base-model\src\main\java">
+        <javaModelGenerator targetPackage="net.yongpo.model" targetProject="D:\p0po\workspace\user\dao\base-model\src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="net.yongpo.mapper" targetProject="D:\p0po\workspace\spring-mvc\dao\base-dao\src\main\resources"/>
+        <sqlMapGenerator targetPackage="net.yongpo.mapper" targetProject="D:\p0po\workspace\user\dao\base-dao\src\main\resources"/>
 
-        <javaClientGenerator targetPackage="net.yongpo.mapper" targetProject="D:\p0po\workspace\spring-mvc\dao\base-dao\src\main\java" type="XMLMAPPER"/>
+        <javaClientGenerator targetPackage="net.yongpo.mapper" targetProject="D:\p0po\workspace\user\dao\base-dao\src\main\java" type="XMLMAPPER"/>
 
         <table tableName="user" domainObjectName="User">
             <generatedKey column="ID" identity="true" sqlStatement="mysql"/>

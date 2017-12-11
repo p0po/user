@@ -15,7 +15,7 @@ public interface TestDAO {
     @SQL("select * from user limit 10")
     List<User> getAll();
 
-    @SQL("insert into hezu.user(user.NICKNAME,user.REAL_NAME,user.PHONE,user.EMAIL,user.GENDER,user.BIRTHDAY,user.SOURCE,user.CREATE_TIME) values (:1.user)")
+    @SQL("insert into popo.user(user.NICKNAME,user.REAL_NAME,user.PHONE,user.EMAIL,user.GENDER,user.BIRTHDAY,user.SOURCE,user.CREATE_TIME) values (:1.user)")
     @ReturnGeneratedKeys
     int addUser(User user);
 }

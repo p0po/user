@@ -9,9 +9,8 @@
     <result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP" />
     <result column="LAST_LOGIN_IP" property="lastLoginIp" jdbcType="VARCHAR" />
     <result column="LAST_LOGIN_UA" property="lastLoginUa" jdbcType="VARCHAR" />
-    <result column="FAILURE_COUNT" property="failureCount" jdbcType="INTEGER" />
-    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="PASSWORD_SET_TIME" property="passwordSetTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Condition_Where_Clause" >
     <where >
@@ -72,8 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, USER_ID, PASSWORD, SALT, LAST_LOGIN_TIME, LAST_LOGIN_IP, LAST_LOGIN_UA, FAILURE_COUNT, 
-    SOURCE, UPDATE_TIME
+    ID, USER_ID, PASSWORD, SALT, LAST_LOGIN_TIME, LAST_LOGIN_IP, LAST_LOGIN_UA, UPDATE_TIME, 
+    PASSWORD_SET_TIME
   </sql>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="net.yongpo.model.PassportCondition" >
     select
@@ -82,6 +81,9 @@
     </if>
     <include refid="Base_Column_List" />
     from passport
+    <if test="index" >
+       FORCE INDEX(`${index}`) 
+    </if>
     <if test="_parameter != null" >
       <include refid="Condition_Where_Clause" />
     </if>
@@ -114,12 +116,10 @@
     </selectKey>
     insert into passport (USER_ID, PASSWORD, SALT, 
       LAST_LOGIN_TIME, LAST_LOGIN_IP, LAST_LOGIN_UA, 
-      FAILURE_COUNT, SOURCE, UPDATE_TIME
-      )
+      UPDATE_TIME, PASSWORD_SET_TIME)
     values (#{userId,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
       #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginUa,jdbcType=VARCHAR}, 
-      #{failureCount,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{updateTime,jdbcType=TIMESTAMP}, #{passwordSetTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="net.yongpo.model.Passport" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -145,14 +145,11 @@
       <if test="lastLoginUa != null" >
         LAST_LOGIN_UA,
       </if>
-      <if test="failureCount != null" >
-        FAILURE_COUNT,
-      </if>
-      <if test="source != null" >
-        SOURCE,
-      </if>
       <if test="updateTime != null" >
         UPDATE_TIME,
+      </if>
+      <if test="passwordSetTime != null" >
+        PASSWORD_SET_TIME,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -174,14 +171,11 @@
       <if test="lastLoginUa != null" >
         #{lastLoginUa,jdbcType=VARCHAR},
       </if>
-      <if test="failureCount != null" >
-        #{failureCount,jdbcType=INTEGER},
-      </if>
-      <if test="source != null" >
-        #{source,jdbcType=VARCHAR},
-      </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passwordSetTime != null" >
+        #{passwordSetTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -215,14 +209,11 @@
       <if test="record.lastLoginUa != null" >
         LAST_LOGIN_UA = #{record.lastLoginUa,jdbcType=VARCHAR},
       </if>
-      <if test="record.failureCount != null" >
-        FAILURE_COUNT = #{record.failureCount,jdbcType=INTEGER},
-      </if>
-      <if test="record.source != null" >
-        SOURCE = #{record.source,jdbcType=VARCHAR},
-      </if>
       <if test="record.updateTime != null" >
         UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.passwordSetTime != null" >
+        PASSWORD_SET_TIME = #{record.passwordSetTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -238,9 +229,8 @@
       LAST_LOGIN_TIME = #{record.lastLoginTime,jdbcType=TIMESTAMP},
       LAST_LOGIN_IP = #{record.lastLoginIp,jdbcType=VARCHAR},
       LAST_LOGIN_UA = #{record.lastLoginUa,jdbcType=VARCHAR},
-      FAILURE_COUNT = #{record.failureCount,jdbcType=INTEGER},
-      SOURCE = #{record.source,jdbcType=VARCHAR},
-      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      PASSWORD_SET_TIME = #{record.passwordSetTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Condition_Where_Clause" />
     </if>
@@ -266,14 +256,11 @@
       <if test="lastLoginUa != null" >
         LAST_LOGIN_UA = #{lastLoginUa,jdbcType=VARCHAR},
       </if>
-      <if test="failureCount != null" >
-        FAILURE_COUNT = #{failureCount,jdbcType=INTEGER},
-      </if>
-      <if test="source != null" >
-        SOURCE = #{source,jdbcType=VARCHAR},
-      </if>
       <if test="updateTime != null" >
         UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passwordSetTime != null" >
+        PASSWORD_SET_TIME = #{passwordSetTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
@@ -286,9 +273,8 @@
       LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
       LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
       LAST_LOGIN_UA = #{lastLoginUa,jdbcType=VARCHAR},
-      FAILURE_COUNT = #{failureCount,jdbcType=INTEGER},
-      SOURCE = #{source,jdbcType=VARCHAR},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      PASSWORD_SET_TIME = #{passwordSetTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -5,11 +5,11 @@
 	   default-lazy-init="true">
 	<context:property-placeholder  order="1" ignore-unresolvable="true"/>
 	<!-- 使用c3p0连接池 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/hezu?useUnicode=true&amp;characterEncoding=utf8" />
-		<property name="user" value="${mysql.user}" />
-		<property name="password" value="${mysql.pass}" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/popo?useUnicode=true&amp;characterEncoding=utf8" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
 		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
 		<property name="acquireIncrement" value="3" />
 		<!--初始化时获取连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
