@@ -1,54 +1,47 @@
 package com.fangger.utils.httpclient;
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
-import org.apache.http.Consts;
-import org.apache.http.Header;
-import org.apache.http.HttpHost;
-import org.apache.http.NameValuePair;
+import org.apache.http.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import javax.security.auth.callback.Callback;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-
 import static com.fangger.utils.httpclient.DefaultConst.*;
 
 /**
- * Created by p0po on 15-2-24.
+ * Created by p0po on 2015/9/8 0008.
  */
 public class PostClient {
-
     public static Future<HttpResult> sendWithPool(HttpClientBuilder httpClientBuilder, ExecutorService exec) {
         return exec.submit(new PostThread(httpClientBuilder));
     }
 
     public static HttpResult send(HttpClientBuilder httpClientBuilder) throws IOException {
-        int connectionTimeOut = httpClientBuilder.getConnectionTimeOut() <= 0?DEFAULT_TIME_OUT:httpClientBuilder.getConnectionTimeOut();
+        int connectionTimeOut = httpClientBuilder.getConnectionTimeOut() <= 0 ? DEFAULT_TIME_OUT : httpClientBuilder.getConnectionTimeOut();
         HttpHost proxy = httpClientBuilder.getProxy();
-        Map<String,String> header = httpClientBuilder.getHeader();
-        Map<String,String> body = httpClientBuilder.getHeader();
+        Map<String, String> header = httpClientBuilder.getHeader();
+        Map<String, String> body = httpClientBuilder.getBody();
         String url = httpClientBuilder.getUrl();
-        Charset charset = httpClientBuilder.getCharset()==null? Consts.UTF_8:httpClientBuilder.getCharset();
+        Charset charset = httpClientBuilder.getCharset() == null ? Consts.UTF_8 : httpClientBuilder.getCharset();
+        String jsonString = httpClientBuilder.getToPostJsonString();
+        Map<String, byte[]> binaryData = httpClientBuilder.getToPostBinaryData();
         Preconditions.checkNotNull(url, "url can not be null");
-
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-
-      /*  if (ssl) {
+        Preconditions.checkArgument((body == null && binaryData == null && jsonString != null) || (body != null && jsonString == null && binaryData == null) || (body == null && jsonString == null && binaryData != null), "[body] or [jsonString] or [binaryData] must need only one");
+       /*  if (ssl) {
             httpClient = createSSLClientDefault();
         }*/
 
@@ -69,12 +62,20 @@ public class PostClient {
         }
 
         if (body != null) {
-            List<NameValuePair> formParams = new ArrayList<NameValuePair>();
+            List<NameValuePair> formParams = new ArrayList<>();
             for (String key : body.keySet()) {
                 formParams.add(new BasicNameValuePair(key, body.get(key)));
             }
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, Consts.UTF_8);
             httpPost.setEntity(entity);
+        } else if (jsonString != null) {
+            StringEntity stringEntity = new StringEntity(jsonString, ContentType.APPLICATION_JSON);
+            httpPost.setEntity(stringEntity);
+        } else if (binaryData != null) {
+            for (String key : binaryData.keySet()) {
+                HttpEntity httpEntity = MultipartEntityBuilder.create().addBinaryBody(key, binaryData.get(key)).build();
+                httpPost.setEntity(httpEntity);
+            }
         }
 
         HttpResult httpResult = new HttpResult();
@@ -87,14 +88,14 @@ public class PostClient {
             httpResult.setStatusCode(response.getStatusLine().getStatusCode());
 
             Header[] headers = response.getAllHeaders();
-            int size = headers == null?1:(headers.length+1);
-            Map<String,String> map = new HashMap<>(size);
-            for (Header resHeader:headers){
-                map.put(resHeader.getName(),resHeader.getValue());
+            int size = headers == null ? 1 : (headers.length + 1);
+            Map<String, String> map = new HashMap<>(size);
+            for (Header resHeader : headers) {
+                map.put(resHeader.getName(), resHeader.getValue());
             }
             httpResult.setHeader(map);
 
-            String result = EntityUtils.toString(response.getEntity(),charset);
+            String result = EntityUtils.toString(response.getEntity(), charset);
             httpResult.setBody(result);
         } finally {
             if (response != null) {

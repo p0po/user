@@ -9,27 +9,48 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
- * Created by p0po on 15-6-25.
+ * Created by p0po on 2015/9/8 0008.
  */
 public class HttpClientBuilder {
     String url;
     Map<String, String> header;
     Map<String, String> body;
+    String toPostJsonString;
+    Map<String, byte[]> toPostBinaryData;
     int connectionTimeOut;
     HttpHost proxy;
     Charset charset;
 
-    public static HttpClientBuilder getClient(String url){
+    public Map<String, byte[]> getToPostBinaryData() {
+        return toPostBinaryData;
+    }
+
+    public HttpClientBuilder setToPostBinaryData(Map<String, byte[]> toPostBinaryData) {
+        this.toPostBinaryData = toPostBinaryData;
+        return this;
+    }
+
+    public static HttpClientBuilder getClient(String url) {
         return new HttpClientBuilder(url);
     }
 
-    public HttpResult get() throws IOException {return GetClient.send(this);}
-    public Future<HttpResult> getWithPool(ExecutorService executorService) throws IOException {return GetClient.sendWithPool(this, executorService);}
+    public HttpResult get() throws IOException {
+        return GetClient.send(this);
+    }
 
-    public HttpResult post() throws IOException {return PostClient.send(this);}
-    public Future<HttpResult> postWithPool(ExecutorService executorService) throws IOException {return PostClient.sendWithPool(this,executorService);}
+    public Future<HttpResult> getWithPool(ExecutorService executorService) throws IOException {
+        return GetClient.sendWithPool(this, executorService);
+    }
 
-    private HttpClientBuilder(String url){
+    public HttpResult post() throws IOException {
+        return PostClient.send(this);
+    }
+
+    public Future<HttpResult> postWithPool(ExecutorService executorService) throws IOException {
+        return PostClient.sendWithPool(this, executorService);
+    }
+
+    private HttpClientBuilder(String url) {
         this.url = url;
     }
 
@@ -39,6 +60,15 @@ public class HttpClientBuilder {
 
     public HttpClientBuilder setProxy(HttpHost proxy) {
         this.proxy = proxy;
+        return this;
+    }
+
+    public String getToPostJsonString() {
+        return toPostJsonString;
+    }
+
+    public HttpClientBuilder setToPostJsonString(String toPostJsonString) {
+        this.toPostJsonString = toPostJsonString;
         return this;
     }
 

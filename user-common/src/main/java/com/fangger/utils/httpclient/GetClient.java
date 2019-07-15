@@ -1,6 +1,5 @@
 package com.fangger.utils.httpclient;
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import org.apache.http.Consts;
 import org.apache.http.Header;
@@ -16,29 +15,28 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static com.fangger.utils.httpclient.DefaultConst.*;
 
 /**
- * Created by p0po on 15-2-24.
+ * Created by p0po on 2015/9/8 0008.
  */
 public class GetClient {
-
     public static HttpResult send(HttpClientBuilder httpClientBuilder) throws IOException {
-        int connectionTimeOut = httpClientBuilder.getConnectionTimeOut() <= 0?DEFAULT_TIME_OUT:httpClientBuilder.getConnectionTimeOut();
+        Preconditions.checkArgument(httpClientBuilder.getBody() == null && httpClientBuilder.getToPostBinaryData() == null && httpClientBuilder.getToPostBinaryData() == null, "Get方法需要将参数拼接到url中");
+        int connectionTimeOut = httpClientBuilder.getConnectionTimeOut() <= 0 ? DEFAULT_TIME_OUT : httpClientBuilder.getConnectionTimeOut();
         HttpHost proxy = httpClientBuilder.getProxy();
-        Map<String,String> header = httpClientBuilder.getHeader();
-        Map<String,String> body = httpClientBuilder.getHeader();
+        Map<String, String> header = httpClientBuilder.getHeader();
         String url = httpClientBuilder.getUrl();
-        Charset charset = httpClientBuilder.getCharset()==null? Consts.UTF_8 :httpClientBuilder.getCharset();
+        Charset charset = httpClientBuilder.getCharset() == null ? Consts.UTF_8 : httpClientBuilder.getCharset();
         Preconditions.checkNotNull(url, "url can not be null");
 
         HttpResult httpResult = new HttpResult();
         //connectionTimeOut = connectionTimeOut < 0 ? DEFAULT_TIME_OUT : connectionTimeOut;
 
         RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(connectionTimeOut)
                 .setSocketTimeout(connectionTimeOut)
                 .setConnectTimeout(connectionTimeOut)
                 .setProxy(proxy)
@@ -56,19 +54,24 @@ public class GetClient {
 
         CloseableHttpResponse response = null;
         try {
-            response = httpClient.execute(httpget, HttpClientContext.create());
+            if (url.startsWith("https://")) {
+                response = sslHttpClient.execute(httpget, HttpClientContext.create());
+            }else{
+                response = httpClient.execute(httpget, HttpClientContext.create());
+            }
 
             Preconditions.checkNotNull(response, "Get % result null", httpget.getURI().toString());
 
             httpResult.setStatusCode(response.getStatusLine().getStatusCode());
 
             Header[] headers = response.getAllHeaders();
-            int size = headers == null?1:(headers.length+1);
-            Map<String,String> map = new HashMap<>(size);
-            for (Header resHeader:headers){
-                map.put(resHeader.getName(),resHeader.getValue());
+            int size = headers == null ? 1 : (headers.length + 1);
+            Map<String, String> map = new HashMap<>(size);
+            for (Header resHeader : headers) {
+                map.put(resHeader.getName(), resHeader.getValue());
             }
             httpResult.setHeader(map);
+            httpResult.setHeaders(headers);
 
             String result = EntityUtils.toString(response.getEntity(), charset);
             httpResult.setBody(result);
@@ -87,11 +90,12 @@ public class GetClient {
 
     /**
      * 并发发起GET请求
+     *
      * @param httpClientBuilder
      * @param exec
      * @return
      */
-    public static Future<HttpResult> sendWithPool(HttpClientBuilder httpClientBuilder,ExecutorService exec) {
+    public static Future<HttpResult> sendWithPool(HttpClientBuilder httpClientBuilder, ExecutorService exec) {
         return exec.submit(new GetThread(httpClientBuilder));
     }
 }
