@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>*合租*</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        body {
+            margin:0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .fb-profile{
+            padding-bottom: 120px;
+        }
+
+        .fb-profile img.fb-image-lg{
+            z-index: 0;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .fb-image-profile {
+            margin: -90px 10px 0px 50px;
+            z-index: 9;
+            width: 20%;
+        }
+
+        .container{
+            margin:0;
+            padding:0;
+            margin-top: -20px;
+        }
+
+        @media (max-width:768px) {
+            .fb-profile{
+                padding-bottom: 30px;
+            }
+
+            .fb-profile-text>h1{
+                font-weight: 700;
+                font-size:16px;
+            }
+
+            .fb-image-profile
+            {
+                margin: -45px 10px 0px 25px;
+                z-index: 9;
+                width: 20%;
+            }
+        }
+    </style>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-bottom">
+    <ul class="nav nav-pills">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="#">Profile</a></li>
+        <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div class="fb-profile">
+        <img align="left" class="fb-image-lg" src="/img/850/280/profile_bg/1.jpg" alt="Profile BG image"/>
+        <img align="left" class="fb-image-profile thumbnail" src="/img/180/180/people/1/profile.jpg" alt="Profile image"/>
+        <div class="fb-profile-text">
+            <h1>Eli Macy</h1>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-center">个人资料</h4>
+            </div>
+            <div class="panel-body text-left">
+                <p class="lead">
+                    <strong>一句话简介：</strong>
+                </p>
+            </div>
+            <ul class="list-group list-group-flush text-left">
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>性别:女</li>
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>年龄:27</li>
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>职业:珠宝销售</li>
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>居住地:北京市 房山 长阳(地铁:房山线 长阳))</li>
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>工作地:北京市 海淀区 中关村(地铁:4号线 中关村)</li>
+            </ul>
+            <div class="panel-footer">
+                <a class="btn btn-lg btn-block btn-success" href="/">联系她</a>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-center">合租要求</h4>
+            </div>
+            <div class="panel-body text-left">
+                <p class="lead">
+                    <strong>希望找一个爱干净的，大学本科的室友</strong>
+                </p>
+            </div>
+            <ul class="list-group list-group-flush text-left">
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>性别:男<span aria-hidden="true" class="badge">&raquo;</span></li>
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>年龄:22--30</li>
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>职业:不限</li>
+                <li class="list-group-item"><i class="icon-ok text-danger"></i>月房租:0--3000元</li>
+            </ul>
+            <!--
+            <div class="panel-footer">
+                <a class="btn btn-lg btn-block btn-success" href="/">查看有缘人</a>
+            </div>
+            -->
+        </div>
+    </div>
+
+</div> <!-- /container -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
